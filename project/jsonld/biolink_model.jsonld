@@ -2,7 +2,7 @@
   "name": "Biolink-Model",
   "description": "Entity and association taxonomy and datamodel for life-sciences data",
   "id": "https://w3id.org/biolink/biolink-model",
-  "version": "4.1.0",
+  "version": "4.2.2",
   "imports": [
     "linkml:types"
   ],
@@ -365,7 +365,7 @@
       "prefix_reference": "http://purl.org/pav/"
     },
     {
-      "prefix_prefix": "PHARMGKB.CHEMICAL",
+      "prefix_prefix": "PHARMGKB.DRUG",
       "prefix_reference": "https://www.pharmgkb.org/chemical/"
     },
     {
@@ -583,17 +583,6 @@
       "from_schema": "https://w3id.org/biolink/biolink-model",
       "base": "str",
       "uri": "http://www.w3.org/2001/XMLSchema#string",
-      "@type": "TypeDefinition"
-    },
-    {
-      "name": "category_type",
-      "definition_uri": "https://w3id.org/biolink/vocab/CategoryType",
-      "description": "A primitive type in which the value denotes a class within the biolink model. The value must be a URI or a CURIE. In a Neo4j representation, the value should be the CURIE for the biolink class, for example biolink:Gene. For an RDF representation, the value should be a URI such as https://w3id.org/biolink/vocab/Gene",
-      "from_schema": "https://w3id.org/biolink/biolink-model",
-      "typeof": "uriorcurie",
-      "base": "URIorCURIE",
-      "uri": "http://www.w3.org/2001/XMLSchema#anyURI",
-      "repr": "str",
       "@type": "TypeDefinition"
     },
     {
@@ -1022,6 +1011,73 @@
   ],
   "enums": [
     {
+      "name": "ApprovalStatusEnum",
+      "definition_uri": "https://w3id.org/biolink/vocab/ApprovalStatusEnum",
+      "description": "",
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "permissible_values": [
+        {
+          "text": "discovery_and_development_phase",
+          "description": "Discovery & Development Phase. Discovery involves researchers finding new possibilities for medication through testing molecular compounds, noting unexpected effects from existing treatments, or the creation of new technology that allows novel ways of targeting medical products to sites in the body. Drug development occurs after researchers identify potential compounds for experiments."
+        },
+        {
+          "text": "preclinical_research_phase",
+          "description": "Preclinical Research Phase.  Once researchers have examined the possibilities a new drug may contain, they must do preliminary research to determine its potential for harm (toxicity). This is categorized as preclinical research and can be one of two types: in vitro or in vivo."
+        },
+        {
+          "text": "fda_clinical_research_phase",
+          "description": "Clinical Research Phase. Clinical research involves trials of the drug on people, and it is one of the most involved stages in the drug development and approval process. Clinical trials must answer specific questions and follow a protocol determined by the drug researcher or manufacturer."
+        },
+        {
+          "text": "fda_review_phase_4",
+          "description": "FDA Review"
+        },
+        {
+          "text": "fda_post_market_safety_review",
+          "description": "FDA Post-Market Safety Monitoring.  The last phase of drug approval is an ongoing one while the drug is on the marketplace. If a developer wants to change anything about the drug formulation or approve it for a new use, they must apply with the FDA. The FDA also frequently reviews the drug\u2019s advertising and its manufacturing facility to make sure everything involved in its creation and marketing is in compliance with regulations."
+        },
+        {
+          "text": "fda_clinical_research_phase_1",
+          "description": "In the FDA Clinical Research Phase, the Clinical Research Phase 1 involves 20 \u2013 100 study participants and lasts several months. This phase is used to determine the safety and dosage of the drug, and about 70% of these drugs move on to the next clinical research phase."
+        },
+        {
+          "text": "fda_clinical_research_phase_2",
+          "description": "In the FDA Clinical Research Phase, the Clinical Research Phase 2 involves up to several hundred people, who must have the disease or condition the drug supposes to treat. This phase can last from a few months to two years, and its purpose is to monitor the efficacy of the drug, as well as note side effects that may occur."
+        },
+        {
+          "text": "fda_clinical_research_phase_3",
+          "description": "In the FDA Clinical Research Phase, the Clinical Research Phase 3 involves 300 \u2013 3000 volunteers and can last up to four years. It is used to continue monitoring the efficacy of the drug, as well as exploring any longer-term adverse reactions."
+        },
+        {
+          "text": "fda_clinical_research_phase_4",
+          "description": "In the FDA Clinical Research Phase, the Clinical Research Phase 4 involves several thousands of volunteers who have the disease or condition and continues to monitor safety and efficacy. If a drug passes this phase, it goes on to FDA review."
+        },
+        {
+          "text": "fda_fast_track",
+          "description": "Fast track is a process designed to facilitate the development, and expedite the review of drugs to treat serious conditions and fill an unmet medical need. The purpose is to get important new drugs to the patient earlier. Fast Track addresses a broad range of serious conditions. For more information https://www.fda.gov/patients/fast-track-breakthrough-therapy-accelerated-approval-priority-review/fast-track"
+        },
+        {
+          "text": "fda_breakthrough_therapy",
+          "description": "Breakthrough Therapy designation is a process designed to expedite the development and review of drugs that are intended to treat a serious condition and preliminary clinical evidence indicates that the drug may demonstrate substantial improvement over available therapy on a clinically significant endpoint(s). For more information https://www.fda.gov/patients/fast-track-breakthrough-therapy-accelerated-approval-priority-review/breakthrough-therapy"
+        },
+        {
+          "text": "fda_accelerated_approval",
+          "description": "When studying a new drug, it can sometimes take many years to learn whether a drug actually provides a real effect on how a patient survives, feels, or functions. A positive therapeutic effect that is clinically meaningful in the context of a given disease is known as \u201cclinical benefit\u201d. Mindful of the fact that it may take an extended period of time to measure a drug\u2019s intended clinical benefit, in 1992 FDA instituted the Accelerated Approval regulations. These regulations allowed drugs for serious conditions that filled an unmet medical need to be approved based on a surrogate endpoint. Using a surrogate endpoint enabled the FDA to approve these drugs faster. For more information https://www.fda.gov/patients/fast-track-breakthrough-therapy-accelerated-approval-priority-review/accelerated-approval"
+        },
+        {
+          "text": "fda_priority_review",
+          "description": "Prior to approval, each drug marketed in the United States must go through a detailed FDA review process. In 1992, under the Prescription Drug User Act (PDUFA), FDA agreed to specific goals for improving the drug review time and created a two-tiered system of review times \u2013 Standard Review and Priority Review. A Priority Review designation means FDA\u2019s goal is to take action on an application within 6 months (compared to 10 months under standard review). For more information https://www.fda.gov/patients/fast-track-breakthrough-therapy-accelerated-approval-priority-review/priority-review"
+        },
+        {
+          "text": "regular_fda_approval",
+          "description": "Regular FDA Approval.  The last phase of drug approval is an ongoing one while the drug is on the marketplace. If a developer wants to change anything about the drug formulation or approve it for a new use, they must apply with the FDA. The FDA also frequently reviews the drug\u2019s advertising and its manufacturing facility to make sure everything involved in its creation and marketing is in compliance with regulations."
+        },
+        {
+          "text": "post_approval_withdrawal"
+        }
+      ]
+    },
+    {
       "name": "ClinicalApprovalStatusEnum",
       "definition_uri": "https://w3id.org/biolink/vocab/ClinicalApprovalStatusEnum",
       "from_schema": "https://w3id.org/biolink/biolink-model",
@@ -1257,6 +1313,18 @@
         },
         {
           "text": "transport"
+        },
+        {
+          "text": "absorption"
+        },
+        {
+          "text": "aggregation"
+        },
+        {
+          "text": "interaction"
+        },
+        {
+          "text": "release"
         },
         {
           "text": "secretion",
@@ -1754,6 +1822,9 @@
       "name": "FDAIDAAdverseEventEnum",
       "definition_uri": "https://w3id.org/biolink/vocab/FDAIDAAdverseEventEnum",
       "description": "please consult with the FDA guidelines as proposed in this document: https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/cfrsearch.cfm?fr=312.32",
+      "in_subset": [
+        "translator_minimal"
+      ],
       "from_schema": "https://w3id.org/biolink/biolink-model",
       "permissible_values": [
         {
@@ -1771,6 +1842,125 @@
         {
           "text": "unexpected_adverse_event",
           "description": "An adverse event or suspected adverse reaction is considered 'unexpected' if it is not listed in the investigator brochure or is not listed at the specificity or severity that has been observed; or, if an investigator brochure is not required or available, is not consistent with the risk information described in the general investigational plan or elsewhere in the current application, as amended. For example, under this definition, hepatic necrosis would be unexpected (by virtue of greater severity) if the investigator brochure referred only to elevated hepatic enzymes or hepatitis. Similarly, cerebral thromboembolism and cerebral vasculitis would be unexpected (by virtue of greater specificity) if the investigator brochure listed only cerebral vascular accidents. 'Unexpected', as used in this definition, also refers to adverse events or suspected adverse reactions that are mentioned in the investigator brochure as occurring with a class of drugs or as anticipated from the pharmacological properties of the drug, but are not specifically mentioned as occurring with the particular drug under investigation."
+        }
+      ]
+    },
+    {
+      "name": "AgentTypeEnum",
+      "definition_uri": "https://w3id.org/biolink/vocab/AgentTypeEnum",
+      "in_subset": [
+        "translator_minimal"
+      ],
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "permissible_values": [
+        {
+          "text": "manual_agent",
+          "description": "A human agent who is responsible for generating a statement of knowledge. The human may utilize computationally generated information as evidence for the resulting knowledge,  but the human is the one who ultimately interprets/reasons with  this evidence to produce a statement of knowledge."
+        },
+        {
+          "text": "automated_agent",
+          "description": "An automated agent, typically a software program or tool, that is  responsible for generating a statement of knowledge. Human contribution  to the knowledge creation process ends with the definition and coding of algorithms or analysis pipelines that get executed by the automated agent."
+        },
+        {
+          "text": "data_analysis_pipeline",
+          "description": "An automated agent that executes an analysis workflow over data and  reports the direct results of the analysis. These typically report  statistical associations/correlations between variables in the input dataset, and do not interpret/infer broader conclusions from associations the analysis reveals in the data.",
+          "is_a": "automated_agent",
+          "notes": [
+            "If an analysis pipeline includes any rules for generating broader  conclusions based on the dataset-specific statistical correlations it calculates (e.g. create a 'treats' edge when the analysis reveals a  drug-disease correlation in the data with statistical scores that meet a  certain threshold) - we would consider this agent to be a Computational Model rather than just a Data Analysis Pipeline."
+          ]
+        },
+        {
+          "text": "computational_model",
+          "description": "An automated agent that generates knowledge statements (typically predictions) based on rules/logic explicitly encoded in an algorithm (e.g. heuristic models, supervised classifiers), or learned from patterns  observed in data (e.g. ML models, unsupervised classifiers).",
+          "is_a": "automated_agent",
+          "notes": [
+            "The bar is quite low relatively for what is considered to be a  \u2018computational model\u2019 by our definition. Even agents/tools that apply  simple rules or logic to the output of an ingest or analysis pipeline to allow for a stronger or more general conclusion to be stated can  qualify an agent as a model. For example, an ingest pipeline that applies rules to its ingest of  clinical trials data to create a 'treats' prediction edge when the  source reports a drug to be in phase 2 or 3 trials represents a computational model because it is automatically drawing a stronger conclusion than the source reports, based on logic encoded in the ingest pipeline. Similarly, a data analysis pipeline that is extended with rules to  automatically generate broader conclusions based on dataset-specific statistical correlations (e.g. create a 'treats' edge when the analysis reveals a drug-disease correlation in the data with statistical scores  that meet a certain threshold), would also qualify as a computational  model by our definition."
+          ]
+        },
+        {
+          "text": "text_mining_agent",
+          "description": "An automated agent that uses Natural Language Processing to recognize concepts and/or relationships in text, and report them using formally encoded semantics (e.g. as an edge in a knowledge graph).",
+          "is_a": "automated_agent",
+          "notes": [
+            "The original statement in the source text is typically made by a human /  manual agent, but if a specific encoding of this knowledge is produced by a text-mining tool, it has an agent_type of 'text_mining_agent'. Examples of text mining agents include SemmedDB, and the Translator Text-Mining Knowledge Provider. Note that text-mining tools are prone to erroneous interpretation of  concepts and relationships, and can fail to provide important details  about the context in which the original knowledge was reported - so users should always consult the source text for a text-mined statement to assess its veracity and relevance."
+          ]
+        },
+        {
+          "text": "image_processing_agent",
+          "description": "An automated agent that processes images to generate textual statements of  knowledge derived from the image and/or expressed in text the image  depicts (e.g. via OCR).",
+          "is_a": "automated_agent"
+        },
+        {
+          "text": "manual_validation_of_automated_agent",
+          "description": "A human agent reviews and validates/approves the veracity of knowledge  that is initially generated by an automated agent.",
+          "notes": [
+            "This term applies when a human was only involved in evaluating the veracity of a knowledge statement that was generated by an automated agent. It is  important to indicate when such manual review has occurred, because it can give a user more confidence in an automated statement."
+          ]
+        },
+        {
+          "text": "not_provided",
+          "description": "The agent type is not provided, typically because it cannot be determined from available information if the agent that generated the knowledge is  manual or automated."
+        }
+      ]
+    },
+    {
+      "name": "KnowledgeLevelEnum",
+      "definition_uri": "https://w3id.org/biolink/vocab/KnowledgeLevelEnum",
+      "in_subset": [
+        "translator_minimal"
+      ],
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "permissible_values": [
+        {
+          "text": "knowledge_assertion",
+          "description": "A statement of purported fact that is put forth by an agent as true, based on assessment of direct evidence. Assertions are likely but not  definitively true.",
+          "notes": [
+            "Knowledge Assertions are supported by direct evidence deemed sufficient by some agent to support a confidence assertion of truth. Our certainty  in this truth is not absolute, but is typically higher than for Predictions."
+          ],
+          "aliases": [
+            "assertion"
+          ]
+        },
+        {
+          "text": "logical_entailment",
+          "description": "A statement reporting a conclusion that follows logically from premises representing established facts or knowledge assertions (e.g. fingernail part of finger, finger part of hand --> fingernail part of hand).",
+          "notes": [
+            "These statements report entailed conclusions derived through dedictive inference. They are not directly asserted by a source, but logically follow from statement(s)  a source does make - and are necessarily true if their supporting premises are true.  In practice, these will primarily be entailments based on logic encoded in ontologies.  Examples include propagation of annotated knowledge to hierarchically-related concepts, across paths through a graph constructed from transitive relationships, or sets of  relationships that support property chain inference."
+          ],
+          "aliases": [
+            "deductive_inference"
+          ]
+        },
+        {
+          "text": "prediction",
+          "description": "A statement of a possible fact based on probabilistic forms of reasoning over more indirect forms of evidence, that lead to more speculative conclusions.",
+          "notes": [
+            "Predictions typically result from non-deductive forms of reasoning - e.g. inductive and deductive inference, or statistical inference where conclusions are drawn about a broader/global population based on data from a representative cohort. For example, a prediction that a drug may treat a particular disease based on its chemical similarity to known drugs that treat the disease, and the fact that it can inhibit proteins  in a pathway that is associated with the disease As Predictions are based on weaker forms of inference and evidence, they are typically  considered lower confidence statements as compared to Knowledge Assertions and Logical Entailments."
+          ],
+          "aliases": [
+            "hypothesis"
+          ]
+        },
+        {
+          "text": "statistical_association",
+          "description": "A statement that reports concepts representing variables in a dataset to be statistically associated with each other in a particular cohort (e.g. 'Metformin Treatment (variable 1) is correlated with Diabetes Diagnosis (variable 2) in EHR dataset X').",
+          "notes": [
+            "Such statements report the direct results of some statistical analysis. Their scope is limited tp the cohort/dataset interrogated in the analysis, and they do not make broader claims or draw  more meaningful conclusions about the domain of discourse. Note however that such Statistical  Associations can be used as evidence to support a more pointed/precise Prediction or Assertion  of knowledge. For example, e.g. a Statistical Association between 'Metformin Prescription' and 'Diabetes Diagnosis' in EHR records could support a Prediction that 'Metformin treats Diabetes',  or 'Metformin causes Diabetes'. This 'treats' edge may have a knowledge_level of 'Prediction',  but the provider could use the 'evidence_type' edge property to indicate that this prediction is  based on a 'Statistical Association'. Because Statistical Associations directly report analysis-specific  results, we can consider them to be inherently true statements, whose broader utility is dependent on  subsequent generalization of the reported result to a broader population, and/or interpretation of the  result as support for a more meaningful statements about the domain of discourse."
+          ]
+        },
+        {
+          "text": "observation",
+          "description": "A statement reporting (and possibly quantifying) a phenomenon that was observed to occur -  absent any analysis or interpretation that generates a statistical association or supports a broader conclusion or inference.",
+          "notes": [
+            "An observation that \"56362 people self-reported taking melatonin to treat migraines\" is agnostic to whether melatonin is an effective or approved treatment - it only claims that it was taken for this purpose. Such observations, however, may be used as the basis for predicting that a  drug may be efficacious against a disease."
+          ]
+        },
+        {
+          "text": "not_provided",
+          "description": "The knowledge level is not provided, typically because it cannot be determined from available. information.",
+          "notes": [
+            "This term is most often applied for text-mined edges, as NLP tools are typically not able to detect a specific knowledge level for the concept relationships they extract (e.g. whether the author  was predicting or asserting a relationship, or merely observed it to occur)."
+          ]
         }
       ]
     }
@@ -2107,7 +2297,7 @@
         "Entity"
       ],
       "is_class_field": true,
-      "range": "category_type",
+      "range": "uriorcurie",
       "@type": "SlotDefinition"
     },
     {
@@ -2406,6 +2596,18 @@
         "GeneProductMixin"
       ],
       "range": "uriorcurie",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "url",
+      "definition_uri": "https://w3id.org/biolink/vocab/url",
+      "description": "This slot holds a string representation of a URL for an external resource about the node it is  present on. Unlike an 'xref' that is primarily represented by a CURIE, this slot is intended to hold a full  URL that can be used to directly access a resource. When linking to an external resource that cannot be  represented by a unique CURIE, this slot should be used.  However, when the intent is to link to the  default URI expansion of a CURIE related to the node it is present on, the xref slot should be used instead.",
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "is_a": "node_property",
+      "domain": "Entity",
+      "slot_uri": "https://w3id.org/biolink/vocab/url",
+      "owner": "url",
+      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -3472,13 +3674,13 @@
       "description": "",
       "from_schema": "https://w3id.org/biolink/biolink-model",
       "is_a": "node_property",
-      "domain": "NamedThing",
+      "domain": "ChemicalMixture",
       "slot_uri": "https://w3id.org/biolink/vocab/is_supplement",
       "owner": "ChemicalMixture",
       "domain_of": [
         "ChemicalMixture"
       ],
-      "range": "ChemicalMixture",
+      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -3487,13 +3689,13 @@
       "description": "",
       "from_schema": "https://w3id.org/biolink/biolink-model",
       "is_a": "node_property",
-      "domain": "NamedThing",
+      "domain": "ChemicalEntity",
       "slot_uri": "https://w3id.org/biolink/vocab/trade_name",
       "owner": "ChemicalEntity",
       "domain_of": [
         "ChemicalEntity"
       ],
-      "range": "ChemicalEntity",
+      "range": "string",
       "@type": "SlotDefinition"
     },
     {
@@ -3603,7 +3805,7 @@
       "domain_of": [
         "ChemicalMixture"
       ],
-      "range": "string",
+      "range": "ApprovalStatusEnum",
       "@type": "SlotDefinition"
     },
     {
@@ -3645,7 +3847,7 @@
       "domain_of": [
         "ChemicalMixture"
       ],
-      "range": "string",
+      "range": "ApprovalStatusEnum",
       "@type": "SlotDefinition"
     },
     {
@@ -4448,8 +4650,10 @@
     {
       "name": "onset_qualifier",
       "definition_uri": "https://w3id.org/biolink/vocab/onset_qualifier",
-      "description": "a qualifier used in a phenotypic association to state when the phenotype appears is in the subject",
-      "deprecated": "True",
+      "description": "a qualifier used in a phenotypic association to state when the phenotype appears is in the subject.",
+      "notes": [
+        "This  is in Biolink to support HP ontology annotations which use \"onset\" (with terms from HP)  as an annotation on a disease to phenotypic feature association.  Please only use it for this purpose.  If the intent is to describe the onset of a disease in the context of a treatment,  use object_aspect_qualifier and object_direction_qualifier to capture \"delayed onset\" or \"exacerbated onset\" slot."
+      ],
       "in_subset": [
         "translator_minimal"
       ],
@@ -4457,7 +4661,10 @@
       "is_a": "qualifier",
       "domain": "Association",
       "slot_uri": "https://w3id.org/biolink/vocab/onset_qualifier",
-      "owner": "onset_qualifier",
+      "owner": "DiseaseToPhenotypicFeatureAssociation",
+      "domain_of": [
+        "DiseaseToPhenotypicFeatureAssociation"
+      ],
       "range": "Onset",
       "@type": "SlotDefinition"
     },
@@ -4564,15 +4771,14 @@
       "description": "A relationship that is asserted between two named things",
       "from_schema": "https://w3id.org/biolink/biolink-model",
       "exact_mappings": [
-        "http://www.w3.org/2004/02/skos/core#relatedMatch",
-        "http://identifiers.org/umls/related_to",
-        "https://skr3.nlm.nih.gov/SemMedDBASSOCIATED_WITH",
-        "https://skr3.nlm.nih.gov/SemMedDBADMINISTERED_TO"
+        "http://identifiers.org/umls/related_to"
       ],
       "narrow_mappings": [
         "https://skr3.nlm.nih.gov/SemMedDBcompared_with",
         "https://skr3.nlm.nih.gov/SemMedDBhigher_than",
         "https://skr3.nlm.nih.gov/SemMedDBlower_than",
+        "https://skr3.nlm.nih.gov/SemMedDBADMINISTERED_TO",
+        "https://skr3.nlm.nih.gov/SemMedDBASSOCIATED_WITH",
         "http://purl.obolibrary.org/obo/BFO_0000054",
         "http://purl.obolibrary.org/obo/uberon/core#protects",
         "http://purl.obolibrary.org/obo/GOREL_0002005",
@@ -7510,6 +7716,9 @@
         "prophylactic for",
         "prevents"
       ],
+      "broad_mappings": [
+        "https://skr3.nlm.nih.gov/SemMedDBPREVENTS"
+      ],
       "is_a": "affects_likelihood_of",
       "mixins": [
         "treats"
@@ -7565,7 +7774,23 @@
       "multivalued": true,
       "inherited": true,
       "owner": "promotes_condition",
+      "inverse": "condition_promoted_by",
       "range": "DiseaseOrPhenotypicFeature",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "condition_promoted_by",
+      "definition_uri": "https://w3id.org/biolink/vocab/condition_promoted_by",
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "is_a": "likelihood_affected_by",
+      "domain": "DiseaseOrPhenotypicFeature",
+      "slot_uri": "https://w3id.org/biolink/vocab/condition_promoted_by",
+      "multivalued": true,
+      "inherited": true,
+      "owner": "condition_promoted_by",
+      "inverse": "promotes_condition",
+      "range": "ChemicalOrDrugOrTreatment",
+      "inlined": true,
       "@type": "SlotDefinition"
     },
     {
@@ -7586,6 +7811,9 @@
       "aliases": [
         "risk factor for"
       ],
+      "broad_mappings": [
+        "https://skr3.nlm.nih.gov/SemMedDBPREDISPOSES"
+      ],
       "is_a": "affects_likelihood_of",
       "mixins": [
         "promotes_condition"
@@ -7602,11 +7830,8 @@
     {
       "name": "condition_predisposed_by",
       "definition_uri": "https://w3id.org/biolink/vocab/condition_predisposed_by",
-      "in_subset": [
-        "translator_minimal"
-      ],
       "from_schema": "https://w3id.org/biolink/biolink-model",
-      "is_a": "related_to_at_instance_level",
+      "is_a": "likelihood_affected_by",
       "domain": "DiseaseOrPhenotypicFeature",
       "slot_uri": "https://w3id.org/biolink/vocab/condition_predisposed_by",
       "multivalued": true,
@@ -7685,7 +7910,7 @@
           "@type": "Annotation"
         }
       ],
-      "description": "Holds between an intervention (substance, procedure, or activity) and a medical condition (disease or phenotypic feature), and states that the intervention is able to ameliorate, stabilize, or cure the condition or delay, prevent, or reduce the risk of it manifesting in the first place. \u2018Treats\u2019 edges should be asserted (knowledge_level: assertion) only in cases where there is strong supporting evidence - i.e. the intervention is approved or in phase 4 trials for the condition, or is an otherwise established treatment in the medical community (e.g. a widely-accepted or formally recommended off-label use). In the absence of such evidence, weaker predicates should be used in asserted edges (e.g. \u2018in clinical trials for\u2019 or \u2018beneficial in models of\u2019). \u2018Treats\u2019 edges based on weaker or indirect forms of evidence can however be created as predictions (knowledge_level: prediction) and should point to the more foundational asserted edges that support them.",
+      "description": "Holds between an intervention (substance, procedure, or activity) and a medical condition (disease or phenotypic feature), and states that the intervention is, in some population(s),  able to ameliorate, stabilize, or cure the condition or delay, prevent, or reduce the risk  of it manifesting in the first place. \u2018Treats\u2019 edges should be asserted (knowledge_level: assertion) only in cases where there is strong supporting evidence - i.e. in some population(s) the intervention is approved for the condition, passed phase 3 or in phase 4 trials for the condition, or is an otherwise  established treatment in the medical community (e.g. a widely-accepted or formally recommended  off-label use). In the absence of such evidence, weaker predicates should be used in  asserted edges (e.g. \u2018in clinical trials for\u2019 or \u2018beneficial in models of\u2019). \u2018Treats\u2019 edges based on weaker or indirect forms of evidence can however be created as predictions  (knowledge_level: prediction) and should point to the more foundational asserted edges that  support them.",
       "in_subset": [
         "translator_minimal"
       ],
@@ -7736,6 +7961,8 @@
       "mixin": true,
       "domain": "ChemicalOrDrugOrTreatment",
       "slot_uri": "https://w3id.org/biolink/vocab/treats",
+      "multivalued": true,
+      "inherited": true,
       "owner": "treats",
       "inverse": "treated_by",
       "range": "DiseaseOrPhenotypicFeature",
@@ -7755,9 +7982,12 @@
       "narrow_mappings": [
         "http://purl.obolibrary.org/obo/RO_0002302"
       ],
+      "is_a": "subject_of_treatment_application_or_study_for_treatment_by",
       "mixin": true,
       "domain": "DiseaseOrPhenotypicFeature",
       "slot_uri": "https://w3id.org/biolink/vocab/treated_by",
+      "multivalued": true,
+      "inherited": true,
       "owner": "treated_by",
       "inverse": "treats",
       "range": "ChemicalOrDrugOrTreatment",
@@ -7788,20 +8018,8 @@
       "multivalued": true,
       "inherited": true,
       "owner": "studied_to_treat",
-      "inverse": "studied_for_treatment_with",
+      "inverse": "treated_in_studies_by",
       "range": "DiseaseOrPhenotypicFeature",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "studied_for_treatment_with",
-      "definition_uri": "https://w3id.org/biolink/vocab/studied_for_treatment_with",
-      "from_schema": "https://w3id.org/biolink/biolink-model",
-      "domain": "DiseaseOrPhenotypicFeature",
-      "slot_uri": "https://w3id.org/biolink/vocab/studied_for_treatment_with",
-      "owner": "studied_for_treatment_with",
-      "inverse": "studied_to_treat",
-      "range": "ChemicalOrDrugOrTreatment",
-      "inlined": true,
       "@type": "SlotDefinition"
     },
     {
@@ -7831,7 +8049,53 @@
       "multivalued": true,
       "inherited": true,
       "owner": "in_clinical_trials_for",
+      "inverse": "tested_by_clinical_trials_of",
       "range": "DiseaseOrPhenotypicFeature",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "tested_by_clinical_trials_of",
+      "definition_uri": "https://w3id.org/biolink/vocab/tested_by_clinical_trials_of",
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "is_a": "treated_in_studies_by",
+      "domain": "DiseaseOrPhenotypicFeature",
+      "slot_uri": "https://w3id.org/biolink/vocab/tested_by_clinical_trials_of",
+      "multivalued": true,
+      "inherited": true,
+      "owner": "tested_by_clinical_trials_of",
+      "inverse": "in_clinical_trials_for",
+      "range": "ChemicalOrDrugOrTreatment",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "treated_in_studies_by",
+      "definition_uri": "https://w3id.org/biolink/vocab/treated_in_studies_by",
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "is_a": "treated_by",
+      "domain": "DiseaseOrPhenotypicFeature",
+      "slot_uri": "https://w3id.org/biolink/vocab/treated_in_studies_by",
+      "multivalued": true,
+      "inherited": true,
+      "owner": "treated_in_studies_by",
+      "inverse": "studied_to_treat",
+      "range": "ChemicalOrDrugOrTreatment",
+      "inlined": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "tested_by_preclinical_trials_of",
+      "definition_uri": "https://w3id.org/biolink/vocab/tested_by_preclinical_trials_of",
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "is_a": "treated_in_studies_by",
+      "domain": "DiseaseOrPhenotypicFeature",
+      "slot_uri": "https://w3id.org/biolink/vocab/tested_by_preclinical_trials_of",
+      "multivalued": true,
+      "inherited": true,
+      "owner": "tested_by_preclinical_trials_of",
+      "inverse": "in_preclinical_trials_for",
+      "range": "ChemicalOrDrugOrTreatment",
+      "inlined": true,
       "@type": "SlotDefinition"
     },
     {
@@ -7858,6 +8122,7 @@
       "multivalued": true,
       "inherited": true,
       "owner": "in_preclinical_trials_for",
+      "inverse": "tested_by_preclinical_trials_of",
       "range": "DiseaseOrPhenotypicFeature",
       "@type": "SlotDefinition"
     },
@@ -7888,7 +8153,23 @@
       "multivalued": true,
       "inherited": true,
       "owner": "beneficial_in_models_for",
+      "inverse": "models_demonstrating_benefits_for",
       "range": "DiseaseOrPhenotypicFeature",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "models_demonstrating_benefits_for",
+      "definition_uri": "https://w3id.org/biolink/vocab/models_demonstrating_benefits_for",
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "is_a": "tested_by_preclinical_trials_of",
+      "domain": "DiseaseOrPhenotypicFeature",
+      "slot_uri": "https://w3id.org/biolink/vocab/models_demonstrating_benefits_for",
+      "multivalued": true,
+      "inherited": true,
+      "owner": "models_demonstrating_benefits_for",
+      "inverse": "beneficial_in_models_for",
+      "range": "ChemicalOrDrugOrTreatment",
+      "inlined": true,
       "@type": "SlotDefinition"
     },
     {
@@ -7923,7 +8204,23 @@
       "multivalued": true,
       "inherited": true,
       "owner": "applied_to_treat",
+      "inverse": "treatment_applications_from",
       "range": "DiseaseOrPhenotypicFeature",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "treatment_applications_from",
+      "definition_uri": "https://w3id.org/biolink/vocab/treatment_applications_from",
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "is_a": "related_to_at_instance_level",
+      "domain": "DiseaseOrPhenotypicFeature",
+      "slot_uri": "https://w3id.org/biolink/vocab/treatment_applications_from",
+      "multivalued": true,
+      "inherited": true,
+      "owner": "treatment_applications_from",
+      "inverse": "applied_to_treat",
+      "range": "ChemicalOrDrugOrTreatment",
+      "inlined": true,
       "@type": "SlotDefinition"
     },
     {
@@ -7947,9 +8244,31 @@
       "exact_mappings": [
         "https://skr3.nlm.nih.gov/SemMedDBTREATS"
       ],
+      "is_a": "related_to_at_instance_level",
       "mixin": true,
+      "domain": "ChemicalOrDrugOrTreatment",
       "slot_uri": "https://w3id.org/biolink/vocab/treats_or_applied_or_studied_to_treat",
-      "range": "string",
+      "multivalued": true,
+      "inherited": true,
+      "owner": "treats_or_applied_or_studied_to_treat",
+      "inverse": "subject_of_treatment_application_or_study_for_treatment_by",
+      "range": "DiseaseOrPhenotypicFeature",
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "subject_of_treatment_application_or_study_for_treatment_by",
+      "definition_uri": "https://w3id.org/biolink/vocab/subject_of_treatment_application_or_study_for_treatment_by",
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "is_a": "related_to_at_instance_level",
+      "mixin": true,
+      "domain": "DiseaseOrPhenotypicFeature",
+      "slot_uri": "https://w3id.org/biolink/vocab/subject_of_treatment_application_or_study_for_treatment_by",
+      "multivalued": true,
+      "inherited": true,
+      "owner": "subject_of_treatment_application_or_study_for_treatment_by",
+      "inverse": "treats_or_applied_or_studied_to_treat",
+      "range": "ChemicalOrDrugOrTreatment",
+      "inlined": true,
       "@type": "SlotDefinition"
     },
     {
@@ -8242,7 +8561,8 @@
       "narrow_mappings": [
         "http://purl.obolibrary.org/obo/NCIT_R89",
         "http://purl.obolibrary.org/obo/doid#has_symptom",
-        "http://purl.obolibrary.org/obo/RO_0004022"
+        "http://purl.obolibrary.org/obo/RO_0004022",
+        "http://purl.obolibrary.org/obo/RO_0004029"
       ],
       "broad_mappings": [
         "http://purl.obolibrary.org/obo/NCIT_R115",
@@ -10523,7 +10843,7 @@
       "inherited": true,
       "owner": "contraindicated_in",
       "inverse": "has_contraindication",
-      "range": "DiseaseOrPhenotypicFeature",
+      "range": "BiologicalEntity",
       "@type": "SlotDefinition"
     },
     {
@@ -10541,7 +10861,7 @@
       "definition_uri": "https://w3id.org/biolink/vocab/has_contraindication",
       "from_schema": "https://w3id.org/biolink/biolink-model",
       "is_a": "related_to_at_instance_level",
-      "domain": "DiseaseOrPhenotypicFeature",
+      "domain": "BiologicalEntity",
       "slot_uri": "https://w3id.org/biolink/vocab/has_contraindication",
       "multivalued": true,
       "inherited": true,
@@ -10904,15 +11224,12 @@
         "translator_minimal"
       ],
       "from_schema": "https://w3id.org/biolink/biolink-model",
-      "mappings": [
-        "http://www.w3.org/2000/01/rdf-schema#label"
-      ],
       "exact_mappings": [
         "https://www.wikidata.org/prop/P225"
       ],
       "is_a": "node_property",
       "domain": "ThingWithTaxon",
-      "slot_uri": "http://www.w3.org/2000/01/rdf-schema#label",
+      "slot_uri": "https://w3id.org/biolink/vocab/in_taxon_label",
       "owner": "ThingWithTaxon",
       "domain_of": [
         "ThingWithTaxon"
@@ -11807,7 +12124,10 @@
       "is_a": "association_slot",
       "domain": "Association",
       "slot_uri": "https://w3id.org/biolink/vocab/p_value",
-      "owner": "p_value",
+      "owner": "Association",
+      "domain_of": [
+        "Association"
+      ],
       "range": "float",
       "@type": "SlotDefinition"
     },
@@ -11963,7 +12283,10 @@
       "is_a": "p_value",
       "domain": "Association",
       "slot_uri": "https://w3id.org/biolink/vocab/adjusted_p_value",
-      "owner": "adjusted_p_value",
+      "owner": "Association",
+      "domain_of": [
+        "Association"
+      ],
       "range": "float",
       "@type": "SlotDefinition"
     },
@@ -12564,6 +12887,81 @@
       "@type": "SlotDefinition"
     },
     {
+      "name": "knowledge_level",
+      "definition_uri": "https://w3id.org/biolink/vocab/knowledge_level",
+      "description": "Describes the level of knowledge expressed in a statement, based on the reasoning or analysis methods used to generate the statement, or the scope or specificity of what the statement expresses to be true.",
+      "notes": [
+        "The notion of a 'level' of knowledge can in one sense relate to the strength  of a statement - i.e. how confident we are that it says something true about our domain of discourse. Here, we can generally consider Assertions to be  stronger than Entailments to be stronger than Predictions.  But in another sense, 'level' of knowledge can refer to the scope or specificity of what a statement expresses - on a spectrum from context-specific results of a data analysis, to generalized assertions of knowledge or fact. Here, Statistical  Associations and  Observations represent more foundational statements that are only  slightly removed from the data on which they are based (the former reporting the  direct results of  an analysis in terms of correlations between variables in the data, and the latter describing phenomena that were observed/reported to have occurred)."
+      ],
+      "examples": [
+        {
+          "value": "knowledge_assertion",
+          "@type": "Example"
+        },
+        {
+          "value": "prediction",
+          "@type": "Example"
+        },
+        {
+          "value": "statistical_association",
+          "@type": "Example"
+        }
+      ],
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "aliases": [
+        "knowledge type"
+      ],
+      "is_a": "association_slot",
+      "domain": "Association",
+      "slot_uri": "https://w3id.org/biolink/vocab/knowledge_level",
+      "ifabsent": "string(not_provided)",
+      "owner": "Association",
+      "domain_of": [
+        "Association"
+      ],
+      "range": "KnowledgeLevelEnum",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
+      "name": "agent_type",
+      "definition_uri": "https://w3id.org/biolink/vocab/agent_type",
+      "description": "Describes the high-level category of agent who originally generated a  statement of knowledge or other type of information.",
+      "notes": [
+        "Note that this property indicates the type of agent who produced a  final statement of knowledge, which is often different from the  agent oragents who produced information used as evidence to  support generation of this knowledge. For example, if a human curator concludes that a particular gene variant causes a medical condition - based on their interpretation of information produced by computational  modeling tools, automated data analysis pipelines, and robotic laboratory assay systems - the agent_type for this statement is 'manual agent' -  despite all of the evidence being created by automated agents. But if any of these systems is programmed to generate knowledge statements  directly and without human assistance, the statement would be attributed  to an 'automated_agent'."
+      ],
+      "examples": [
+        {
+          "value": "manual_agent",
+          "@type": "Example"
+        },
+        {
+          "value": "automated_agent",
+          "@type": "Example"
+        },
+        {
+          "value": "computational_model",
+          "@type": "Example"
+        },
+        {
+          "value": "text_mining_agent",
+          "@type": "Example"
+        }
+      ],
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "is_a": "association_slot",
+      "domain": "Association",
+      "slot_uri": "https://w3id.org/biolink/vocab/agent_type",
+      "ifabsent": "string(not_provided)",
+      "owner": "Association",
+      "domain_of": [
+        "Association"
+      ],
+      "range": "AgentTypeEnum",
+      "required": true,
+      "@type": "SlotDefinition"
+    },
+    {
       "name": "attribute_name",
       "definition_uri": "https://w3id.org/biolink/vocab/name",
       "description": "The human-readable 'attribute name' can be set to a string which reflects its context of interpretation, e.g. SEPIO evidence/provenance/confidence annotation or it can default to the name associated with the 'has attribute type' slot ontology term.",
@@ -12622,9 +13020,8 @@
       "is_class_field": true,
       "is_usage_slot": true,
       "usage_slot_name": "category",
-      "range": "category_type",
+      "range": "uriorcurie",
       "required": true,
-      "pattern": "^biolink:[A-Z][A-Za-z]+$",
       "@type": "SlotDefinition"
     },
     {
@@ -13082,41 +13479,6 @@
       "is_usage_slot": true,
       "usage_slot_name": "upstream resource ids",
       "range": "uriorcurie",
-      "@type": "SlotDefinition"
-    },
-    {
-      "name": "small_molecule_id",
-      "definition_uri": "https://w3id.org/biolink/vocab/id",
-      "description": "A unique identifier for an entity. Must be either a CURIE shorthand for a URI or a complete URI",
-      "examples": [
-        {
-          "value": "CHEBI:29101",
-          "description": "sodium ion",
-          "@type": "Example"
-        }
-      ],
-      "in_subset": [
-        "translator_minimal"
-      ],
-      "from_schema": "https://w3id.org/biolink/biolink-model",
-      "exact_mappings": [
-        "https://www.alliancegenome.org/primaryId",
-        "https://github.com/The-Sequence-Ontology/Specifications/blob/master/gff3.md#ID",
-        "https://github.com/geneontology/go-annotation/blob/master/specs/gpad-gpi-2-0.md#DB_Object_ID"
-      ],
-      "is_a": "id",
-      "domain": "SmallMolecule",
-      "slot_uri": "https://w3id.org/biolink/vocab/id",
-      "identifier": true,
-      "alias": "id",
-      "owner": "SmallMolecule",
-      "domain_of": [
-        "SmallMolecule"
-      ],
-      "is_usage_slot": true,
-      "usage_slot_name": "id",
-      "range": "string",
-      "required": true,
       "@type": "SlotDefinition"
     },
     {
@@ -13766,7 +14128,7 @@
       "is_class_field": true,
       "is_usage_slot": true,
       "usage_slot_name": "category",
-      "range": "category_type",
+      "range": "uriorcurie",
       "@type": "SlotDefinition"
     },
     {
@@ -24208,8 +24570,7 @@
         "UMLSSG:DEVI",
         "STY:T074",
         "STY:T075",
-        "STY:T203",
-        "STY:T122"
+        "STY:T203"
       ],
       "is_a": "NamedThing",
       "slots": [
@@ -24563,10 +24924,10 @@
     {
       "name": "MolecularEntity",
       "id_prefixes": [
+        "CHEBI",
+        "UNII",
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
-        "UNII",
-        "CHEBI",
         "DRUGBANK",
         "MESH",
         "CAS",
@@ -24574,11 +24935,14 @@
         "GTOPDB",
         "HMDB",
         "KEGG.COMPOUND",
+        "PHARMGKB.DRUG",
         "ChemBank",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
         "INCHIKEY",
+        "BIGG.METABOLITE",
+        "foodb.compound",
         "KEGG.GLYCAN",
         "KEGG.DRUG",
         "KEGG.ENVIRON",
@@ -24625,28 +24989,30 @@
     {
       "name": "ChemicalEntity",
       "id_prefixes": [
-        "UNII",
         "CHEBI",
-        "MESH",
-        "CAS",
-        "UMLS",
-        "ncats.drug",
-        "PHARMGKB.CHEMICAL",
+        "UNII",
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
+        "DRUGBANK",
+        "MESH",
+        "CAS",
         "DrugCentral",
         "GTOPDB",
         "HMDB",
         "KEGG.COMPOUND",
+        "PHARMGKB.DRUG",
         "ChemBank",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
         "INCHIKEY",
+        "BIGG.METABOLITE",
+        "foodb.compound",
         "KEGG.GLYCAN",
         "KEGG.DRUG",
         "KEGG.ENVIRON",
-        "KEGG"
+        "KEGG",
+        "UMLS"
       ],
       "definition_uri": "https://w3id.org/biolink/vocab/ChemicalEntity",
       "description": "A chemical entity is a physical entity that pertains to chemistry or biochemistry.",
@@ -24661,7 +25027,9 @@
         "STY:T103"
       ],
       "narrow_mappings": [
-        "WIKIDATA:Q43460564"
+        "WIKIDATA:Q43460564",
+        "STY:T123",
+        "STY:T131"
       ],
       "broad_mappings": [
         "STY:T167"
@@ -24700,9 +25068,9 @@
       "name": "SmallMolecule",
       "id_prefixes": [
         "CHEBI",
+        "UNII",
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
-        "UNII",
         "DRUGBANK",
         "MESH",
         "CAS",
@@ -24710,17 +25078,18 @@
         "GTOPDB",
         "HMDB",
         "KEGG.COMPOUND",
+        "PHARMGKB.DRUG",
         "ChemBank",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
         "INCHIKEY",
         "BIGG.METABOLITE",
-        "UMLS",
         "foodb.compound",
         "KEGG.GLYCAN",
         "KEGG.DRUG",
         "KEGG.ENVIRON",
+        "KEGG",
         "UMLS"
       ],
       "definition_uri": "https://w3id.org/biolink/vocab/SmallMolecule",
@@ -24737,8 +25106,6 @@
         "STY:T196",
         "CHEBI:59999",
         "bioschemas:ChemicalSubstance",
-        "STY:T123",
-        "STY:T131",
         "STY:T125",
         "STY:T197",
         "STY:T109",
@@ -24752,6 +25119,7 @@
       ],
       "is_a": "MolecularEntity",
       "slots": [
+        "id",
         "iri",
         "type",
         "name",
@@ -24768,8 +25136,7 @@
         "max_tolerated_dose",
         "is_toxic",
         "has_chemical_role",
-        "is_metabolite",
-        "small_molecule_id"
+        "is_metabolite"
       ],
       "slot_usage": {},
       "class_uri": "https://w3id.org/biolink/vocab/SmallMolecule",
@@ -24778,10 +25145,10 @@
     {
       "name": "ChemicalMixture",
       "id_prefixes": [
+        "CHEBI",
+        "UNII",
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
-        "UNII",
-        "CHEBI",
         "DRUGBANK",
         "MESH",
         "CAS",
@@ -24789,15 +25156,18 @@
         "GTOPDB",
         "HMDB",
         "KEGG.COMPOUND",
+        "PHARMGKB.DRUG",
         "ChemBank",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
         "INCHIKEY",
+        "BIGG.METABOLITE",
+        "foodb.compound",
         "KEGG.GLYCAN",
         "KEGG.DRUG",
-        "KEGG",
         "KEGG.ENVIRON",
+        "KEGG",
         "UMLS"
       ],
       "definition_uri": "https://w3id.org/biolink/vocab/ChemicalMixture",
@@ -25042,10 +25412,10 @@
     {
       "name": "MolecularMixture",
       "id_prefixes": [
+        "CHEBI",
+        "UNII",
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
-        "UNII",
-        "CHEBI",
         "DRUGBANK",
         "MESH",
         "CAS",
@@ -25053,17 +25423,19 @@
         "GTOPDB",
         "HMDB",
         "KEGG.COMPOUND",
+        "PHARMGKB.DRUG",
         "ChemBank",
         "PUBCHEM.SUBSTANCE",
         "SIDER.DRUG",
         "INCHI",
         "INCHIKEY",
+        "BIGG.METABOLITE",
+        "foodb.compound",
         "KEGG.GLYCAN",
         "KEGG.DRUG",
-        "KEGG",
         "KEGG.ENVIRON",
-        "UMLS",
-        "ncats.drug"
+        "KEGG",
+        "UMLS"
       ],
       "definition_uri": "https://w3id.org/biolink/vocab/MolecularMixture",
       "description": "A molecular mixture is a chemical mixture composed of two or more molecular entities with known concentration and stoichiometry.",
@@ -25447,29 +25819,31 @@
     {
       "name": "ProcessedMaterial",
       "id_prefixes": [
-        "UMLS",
+        "CHEBI",
+        "UNII",
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
-        "UNII",
-        "CHEBI",
+        "DRUGBANK",
         "MESH",
         "CAS",
+        "DrugCentral",
         "GTOPDB",
         "HMDB",
-        "KEGG",
         "KEGG.COMPOUND",
+        "PHARMGKB.DRUG",
         "ChemBank",
         "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
         "INCHI",
         "INCHIKEY",
-        "KEGG.GLYCAN",
-        "KEGG.ENVIRON",
-        "ChemBank",
-        "SIDER.DRUG",
         "BIGG.METABOLITE",
         "foodb.compound",
-        "UMLS",
-        "foodb.food"
+        "foodb.food",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.ENVIRON",
+        "KEGG",
+        "UMLS"
       ],
       "definition_uri": "https://w3id.org/biolink/vocab/ProcessedMaterial",
       "description": "A chemical entity (often a mixture) processed for consumption for nutritional, medical or technical use. Is a material entity that is created or changed during material processing.",
@@ -25512,26 +25886,29 @@
         "RXCUI",
         "NDC",
         "UMLS",
+        "CHEBI",
+        "UNII",
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
-        "UNII",
-        "CHEBI",
+        "DRUGBANK",
         "MESH",
         "CAS",
+        "DrugCentral",
         "GTOPDB",
         "HMDB",
-        "KEGG",
         "KEGG.COMPOUND",
+        "PHARMGKB.DRUG",
         "ChemBank",
         "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
         "INCHI",
         "INCHIKEY",
+        "BIGG.METABOLITE",
+        "foodb.compound",
         "KEGG.GLYCAN",
         "KEGG.ENVIRON",
-        "ChemBank",
-        "SIDER.DRUG",
-        "BIGG.METABOLITE",
-        "foodb.compound"
+        "KEGG.ENVIRON",
+        "KEGG"
       ],
       "definition_uri": "https://w3id.org/biolink/vocab/Drug",
       "description": "A substance intended for use in the diagnosis, cure, mitigation, treatment, or prevention of disease",
@@ -25586,30 +25963,31 @@
     {
       "name": "EnvironmentalFoodContaminant",
       "id_prefixes": [
-        "ncats.drug",
-        "RXCUI",
-        "NDC",
-        "UMLS",
+        "CHEBI",
+        "UNII",
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
-        "UNII",
-        "CHEBI",
+        "DRUGBANK",
         "MESH",
         "CAS",
+        "DrugCentral",
         "GTOPDB",
         "HMDB",
-        "KEGG",
         "KEGG.COMPOUND",
+        "PHARMGKB.DRUG",
         "ChemBank",
         "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
         "INCHI",
         "INCHIKEY",
-        "KEGG.GLYCAN",
-        "KEGG.ENVIRON",
-        "ChemBank",
-        "SIDER.DRUG",
         "BIGG.METABOLITE",
-        "foodb.compound"
+        "foodb.compound",
+        "foodb.food",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.ENVIRON",
+        "KEGG",
+        "UMLS"
       ],
       "definition_uri": "https://w3id.org/biolink/vocab/EnvironmentalFoodContaminant",
       "from_schema": "https://w3id.org/biolink/biolink-model",
@@ -25643,30 +26021,31 @@
     {
       "name": "FoodAdditive",
       "id_prefixes": [
-        "ncats.drug",
-        "RXCUI",
-        "NDC",
-        "UMLS",
+        "CHEBI",
+        "UNII",
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
-        "UNII",
-        "CHEBI",
+        "DRUGBANK",
         "MESH",
         "CAS",
+        "DrugCentral",
         "GTOPDB",
         "HMDB",
-        "KEGG",
         "KEGG.COMPOUND",
+        "PHARMGKB.DRUG",
         "ChemBank",
         "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
         "INCHI",
         "INCHIKEY",
-        "KEGG.GLYCAN",
-        "KEGG.ENVIRON",
-        "ChemBank",
-        "SIDER.DRUG",
         "BIGG.METABOLITE",
-        "foodb.compound"
+        "foodb.compound",
+        "foodb.food",
+        "KEGG.GLYCAN",
+        "KEGG.DRUG",
+        "KEGG.ENVIRON",
+        "KEGG",
+        "UMLS"
       ],
       "definition_uri": "https://w3id.org/biolink/vocab/FoodAdditive",
       "from_schema": "https://w3id.org/biolink/biolink-model",
@@ -25703,34 +26082,33 @@
         "foodb.food",
         "foodb.compound",
         "FOODON",
-        "UMLS",
-        "NCIT",
+        "CHEBI",
+        "UNII",
         "PUBCHEM.COMPOUND",
         "CHEMBL.COMPOUND",
-        "UNII",
-        "CHEBI",
+        "DRUGBANK",
         "MESH",
         "CAS",
+        "DrugCentral",
         "GTOPDB",
         "HMDB",
-        "KEGG",
         "KEGG.COMPOUND",
+        "PHARMGKB.DRUG",
         "ChemBank",
         "PUBCHEM.SUBSTANCE",
+        "SIDER.DRUG",
         "INCHI",
         "INCHIKEY",
+        "BIGG.METABOLITE",
         "KEGG.GLYCAN",
+        "KEGG.DRUG",
         "KEGG.ENVIRON",
-        "ChemBank",
-        "SIDER.DRUG",
-        "BIGG.METABOLITE"
+        "KEGG",
+        "UMLS"
       ],
       "definition_uri": "https://w3id.org/biolink/vocab/Food",
       "description": "A substance consumed by a living organism as a source of nutrition",
       "from_schema": "https://w3id.org/biolink/biolink-model",
-      "exact_mappings": [
-        "STY:T168"
-      ],
       "is_a": "ChemicalMixture",
       "slots": [
         "id",
@@ -26425,7 +26803,11 @@
       ],
       "narrow_mappings": [
         "STY:T019",
-        "STY:T020"
+        "STY:T020",
+        "STY:T048",
+        "STY:T049",
+        "STY:T191",
+        "MONDO:0042489"
       ],
       "is_a": "DiseaseOrPhenotypicFeature",
       "slots": [
@@ -26509,7 +26891,8 @@
         "XPO:00000000",
         "FYPO:0000001",
         "APO:0000017",
-        "TO:0000387"
+        "TO:0000387",
+        "STY:T190"
       ],
       "broad_mappings": [
         "BFO:0000019",
@@ -28119,8 +28502,10 @@
     {
       "name": "Onset",
       "definition_uri": "https://w3id.org/biolink/vocab/Onset",
-      "description": "The age group in which (disease) symptom manifestations appear",
-      "deprecated": "True",
+      "description": "The age group in which (disease) symptom manifestations appear.",
+      "notes": [
+        "This class is in Biolink to support HP ontology annotations which use \"onset\" (with terms from HP)  as an annotation on a disease to phenotypic feature association.  This should be the primary use case for this class."
+      ],
       "from_schema": "https://w3id.org/biolink/biolink-model",
       "exact_mappings": [
         "HP:0003674"
@@ -29121,6 +29506,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29136,6 +29523,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category"
       ],
@@ -29163,6 +29552,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29178,6 +29569,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "chemical_entity_assesses_named_thing_association_subject",
@@ -29208,6 +29601,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29223,6 +29618,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "contributor_association_subject",
@@ -29260,6 +29657,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29275,6 +29674,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "genotype_to_genotype_part_association_predicate",
@@ -29310,6 +29711,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29325,6 +29728,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "genotype_to_gene_association_predicate",
@@ -29360,6 +29765,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29375,6 +29782,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "genotype_to_variant_association_predicate",
@@ -29415,6 +29824,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29430,6 +29841,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_gene_association_subject",
@@ -29464,6 +29877,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29479,6 +29894,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_gene_homology_association_subject",
@@ -29515,6 +29932,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29530,6 +29949,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_gene_family_association_subject",
@@ -29585,6 +30006,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29600,6 +30023,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_gene_association_subject",
@@ -29643,6 +30068,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29658,6 +30085,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_gene_association_subject",
@@ -29693,6 +30122,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29708,6 +30139,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "interacting_molecules_category",
@@ -29770,6 +30203,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29785,6 +30220,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "cell_line_to_disease_or_phenotypic_feature_association_subject"
@@ -29893,6 +30330,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29908,6 +30347,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "subject",
@@ -29942,6 +30383,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -29957,6 +30400,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "predicate",
@@ -29995,6 +30440,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30010,6 +30457,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "predicate",
@@ -30044,6 +30493,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30059,6 +30510,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "chemical_to_chemical_derivation_association_catalyst_qualifier",
@@ -30105,6 +30558,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30120,6 +30575,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "chemical_to_disease_or_phenotypic_feature_association_object"
@@ -30159,6 +30616,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30174,6 +30633,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "FDA_adverse_event_level",
@@ -30215,6 +30676,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30230,6 +30693,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "FDA_adverse_event_level",
@@ -30269,6 +30734,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30284,6 +30751,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_pathway_association_subject",
@@ -30318,6 +30787,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30333,6 +30804,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "molecular_activity_to_pathway_association_subject",
@@ -30371,6 +30844,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30386,6 +30861,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "chemical_to_pathway_association_subject",
@@ -30420,6 +30897,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30435,6 +30914,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "subject",
@@ -30487,6 +30968,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30502,6 +30985,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "chemical_gene_interaction_association_subject_form_or_variant_qualifier",
@@ -30541,6 +31026,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30556,6 +31043,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "chemical_affects_gene_association_subject_form_or_variant_qualifier",
@@ -30608,6 +31097,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30623,6 +31114,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_affects_chemical_association_subject_form_or_variant_qualifier",
@@ -30678,6 +31171,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30693,6 +31188,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "drug_to_gene_association_object"
@@ -30744,6 +31241,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30759,6 +31258,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "material_sample_derivation_association_subject",
@@ -30801,6 +31302,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30816,6 +31319,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category"
       ],
@@ -30890,6 +31395,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30905,6 +31412,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category"
       ],
@@ -30961,6 +31470,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -30976,6 +31487,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "population_context_qualifier",
@@ -31114,6 +31627,76 @@
       "@type": "ClassDefinition"
     },
     {
+      "name": "PhenotypicFeatureToPhenotypicFeatureAssociation",
+      "definition_uri": "https://w3id.org/biolink/vocab/PhenotypicFeatureToPhenotypicFeatureAssociation",
+      "description": "Association between two concept nodes of phenotypic character, qualified by the predicate used. This association may typically be used to specify 'similar_to' or 'member_of' relationships.",
+      "from_schema": "https://w3id.org/biolink/biolink-model",
+      "is_a": "Association",
+      "mixins": [
+        "PhenotypicFeatureToEntityAssociationMixin",
+        "EntityToPhenotypicFeatureAssociationMixin"
+      ],
+      "slots": [
+        "id",
+        "iri",
+        "name",
+        "description",
+        "has_attribute",
+        "deprecated",
+        "subject",
+        "predicate",
+        "object",
+        "negated",
+        "qualifier",
+        "qualifiers",
+        "publications",
+        "has_evidence",
+        "knowledge_source",
+        "primary_knowledge_source",
+        "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
+        "timepoint",
+        "original_subject",
+        "original_predicate",
+        "original_object",
+        "subject_category",
+        "object_category",
+        "subject_closure",
+        "object_closure",
+        "subject_category_closure",
+        "object_category_closure",
+        "subject_namespace",
+        "object_namespace",
+        "subject_label_closure",
+        "object_label_closure",
+        "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
+        "association_type",
+        "association_category",
+        "frequency_qualifier",
+        "subject_aspect_qualifier",
+        "subject_direction_qualifier",
+        "object_aspect_qualifier",
+        "object_direction_qualifier",
+        "qualified_predicate",
+        "sex_qualifier",
+        "has_count",
+        "has_total",
+        "has_quotient",
+        "has_percentage"
+      ],
+      "slot_usage": {},
+      "class_uri": "https://w3id.org/biolink/vocab/PhenotypicFeatureToPhenotypicFeatureAssociation",
+      "defining_slots": [
+        "subject",
+        "predicate",
+        "object"
+      ],
+      "@type": "ClassDefinition"
+    },
+    {
       "name": "InformationContentEntityToNamedThingAssociation",
       "definition_uri": "https://w3id.org/biolink/vocab/InformationContentEntityToNamedThingAssociation",
       "description": "association between a named thing and a information content entity where the specific context of the relationship between that named thing and the publication is unknown. For example, model organisms databases often capture the knowledge that a gene is found in a journal article, but not specifically the context in which that gene was documented in the article. In these cases, this association with the accompanying predicate 'mentions' could be used. Conversely, for more specific associations (like 'gene to disease association', the publication should be captured as an edge property).",
@@ -31137,6 +31720,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31152,6 +31737,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "information_content_entity_to_named_thing_association_subject",
@@ -31234,6 +31821,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31249,6 +31838,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "disease_or_phenotypic_feature_to_location_association_object"
@@ -31282,6 +31873,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31297,6 +31890,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "disease_or_phenotypic_feature_to_genetic_inheritance_association_predicate",
@@ -31366,6 +31961,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31381,6 +31978,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "genotype_to_phenotypic_feature_association_predicate",
@@ -31431,6 +32030,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31446,6 +32047,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "exposure_event_to_phenotypic_feature_association_subject",
@@ -31499,6 +32102,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31514,8 +32119,11 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
+        "onset_qualifier",
         "disease_to_phenotypic_feature_association_subject",
         "disease_to_phenotypic_feature_association_object",
         "has_count",
@@ -31566,6 +32174,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31581,6 +32191,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "frequency_qualifier",
@@ -31628,6 +32240,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31643,6 +32257,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "behavior_to_behavioral_feature_association_subject",
@@ -31742,6 +32358,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31757,6 +32375,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_disease_or_phenotypic_feature_association_subject_aspect_qualifier",
@@ -31805,6 +32425,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31820,6 +32442,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_disease_or_phenotypic_feature_association_subject_aspect_qualifier",
@@ -31878,6 +32502,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31893,6 +32519,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_disease_or_phenotypic_feature_association_subject_aspect_qualifier",
@@ -31942,6 +32570,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -31957,6 +32587,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_disease_or_phenotypic_feature_association_subject_aspect_qualifier",
@@ -32006,6 +32638,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32021,6 +32655,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_disease_or_phenotypic_feature_association_subject_aspect_qualifier",
@@ -32069,6 +32705,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32084,6 +32722,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_disease_or_phenotypic_feature_association_subject_aspect_qualifier",
@@ -32137,6 +32777,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32152,6 +32794,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "phenotypic_feature_to_disease_association_predicate",
@@ -32201,6 +32845,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32216,6 +32862,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "variant_to_gene_association_object",
@@ -32255,6 +32903,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32270,6 +32920,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "variant_to_gene_association_object",
@@ -32315,6 +32967,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32330,6 +32984,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "variant_to_population_association_subject",
@@ -32369,6 +33025,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32384,6 +33042,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "population_to_population_association_subject",
@@ -32424,6 +33084,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32439,6 +33101,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "variant_to_phenotypic_feature_association_subject",
@@ -32489,6 +33153,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32504,6 +33170,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "variant_to_disease_association_subject",
@@ -32551,6 +33219,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32566,6 +33236,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "genotype_to_disease_association_subject",
@@ -32625,6 +33297,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32640,6 +33314,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_disease_or_phenotypic_feature_association_subject_aspect_qualifier",
@@ -32690,6 +33366,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32705,6 +33383,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "variant_to_disease_association_predicate",
@@ -32750,6 +33430,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32765,6 +33447,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "genotype_to_disease_association_predicate",
@@ -32812,6 +33496,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32827,6 +33513,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "cell_line_as_a_model_of_disease_association_subject",
@@ -32872,6 +33560,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32887,6 +33577,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "organismal_entity_as_a_model_of_disease_association_subject",
@@ -32927,6 +33619,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32942,6 +33636,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "organism_to_organism_association_subject",
@@ -32977,6 +33673,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -32992,6 +33690,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "taxon_to_taxon_association_subject",
@@ -33026,6 +33726,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33041,6 +33743,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_disease_or_phenotypic_feature_association_subject_aspect_qualifier",
@@ -33095,6 +33799,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33110,6 +33816,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_expression_site_association_stage_qualifier",
@@ -33153,6 +33861,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33168,6 +33878,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "sequence_variant_modulates_treatment_association_subject",
@@ -33203,6 +33915,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33218,6 +33932,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "functional_association_subject",
@@ -33267,6 +33983,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33282,6 +34000,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "functional_association_subject",
@@ -33316,6 +34036,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33331,6 +34053,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "functional_association_subject",
@@ -33365,6 +34089,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33380,6 +34106,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "functional_association_subject",
@@ -33411,6 +34139,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33426,6 +34156,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "molecular_activity_to_chemical_entity_association_subject",
@@ -33457,6 +34189,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33472,6 +34206,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "molecular_activity_to_molecular_activity_association_subject",
@@ -33508,6 +34244,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33523,6 +34261,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_go_term_association_subject",
@@ -33559,6 +34299,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33574,6 +34316,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "clinical_approval_status",
@@ -33610,6 +34354,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33625,6 +34371,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "clinical_approval_status",
@@ -33662,6 +34410,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33677,6 +34427,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category"
       ],
@@ -33711,6 +34463,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33726,6 +34480,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "start_interbase_coordinate",
@@ -33766,6 +34522,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33781,6 +34539,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "sequence_feature_relationship_subject",
@@ -33816,6 +34576,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33831,6 +34593,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "transcript_to_gene_relationship_subject",
@@ -33865,6 +34629,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33880,6 +34646,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "gene_to_gene_product_relationship_subject",
@@ -33916,6 +34684,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33931,6 +34701,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "exon_to_transcript_relationship_subject",
@@ -33965,6 +34737,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -33980,6 +34754,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "chemical_entity_or_gene_or_gene_product_regulates_gene_association_object_direction_qualifier",
@@ -34013,6 +34789,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -34028,6 +34806,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "anatomical_entity_to_anatomical_entity_association_subject",
@@ -34062,6 +34842,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -34077,6 +34859,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "anatomical_entity_to_anatomical_entity_part_of_association_subject",
@@ -34111,6 +34895,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -34126,6 +34912,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "anatomical_entity_to_anatomical_entity_ontogenic_association_subject",
@@ -34183,6 +34971,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -34198,6 +34988,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "organism_taxon_to_organism_taxon_association_subject",
@@ -34232,6 +35024,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -34247,6 +35041,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "organism_taxon_to_organism_taxon_specialization_subject",
@@ -34281,6 +35077,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -34296,6 +35094,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "organism_taxon_to_organism_taxon_interaction_associated_environmental_context",
@@ -34334,6 +35134,8 @@
         "knowledge_source",
         "primary_knowledge_source",
         "aggregator_knowledge_source",
+        "knowledge_level",
+        "agent_type",
         "timepoint",
         "original_subject",
         "original_predicate",
@@ -34349,6 +35151,8 @@
         "subject_label_closure",
         "object_label_closure",
         "retrieval_source_ids",
+        "p_value",
+        "adjusted_p_value",
         "association_type",
         "association_category",
         "organism_taxon_to_environment_association_subject",
@@ -34362,9 +35166,9 @@
   ],
   "metamodel_version": "1.7.0",
   "source_file": "biolink_model.yaml",
-  "source_file_date": "2024-02-15T19:56:32",
-  "source_file_size": 376559,
-  "generation_date": "2024-02-15T19:56:39",
+  "source_file_date": "2024-08-06T22:04:29",
+  "source_file_size": 398312,
+  "generation_date": "2024-08-06T22:04:34",
   "@type": "SchemaDefinition",
   "@context": [
     "project/jsonld/biolink_model.context.jsonld",

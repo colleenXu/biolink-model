@@ -1,5 +1,5 @@
 # Auto generated from biolink_model.yaml by pythongen.py version: 0.0.1
-# Generation date: 2024-02-15T19:57:01
+# Generation date: 2024-08-06T22:04:47
 # Schema: Biolink-Model
 #
 # id: https://w3id.org/biolink/biolink-model
@@ -11,6 +11,7 @@ import re
 from jsonasobj2 import JsonObj, as_dict
 from typing import Optional, List, Union, Dict, ClassVar, Any
 from dataclasses import dataclass
+from datetime import date, datetime
 from linkml_runtime.linkml_model.meta import EnumDefinition, PermissibleValue, PvFormulaOptions
 
 from linkml_runtime.utils.slot import Slot
@@ -25,7 +26,7 @@ from linkml_runtime.linkml_model.types import Boolean, Date, Double, Float, Inte
 from linkml_runtime.utils.metamodelcore import Bool, URIorCURIE, XSDDate, XSDTime
 
 metamodel_version = "1.7.0"
-version = "4.1.0"
+version = "4.2.2"
 
 # Overwrite dataclasses _init_fn to add **kwargs in __init__
 dataclasses._init_fn = dataclasses_init_fn_with_kwargs
@@ -169,8 +170,8 @@ PANTHER_PATHWAY = CurieNamespace('PANTHER_PATHWAY', 'http://identifiers.org/pant
 PATO = CurieNamespace('PATO', 'http://purl.obolibrary.org/obo/PATO_')
 PCO = CurieNamespace('PCO', 'http://purl.obolibrary.org/obo/PCO_')
 PFAM = CurieNamespace('PFAM', 'http://identifiers.org/pfam/')
-PHARMGKB_CHEMICAL = CurieNamespace('PHARMGKB_CHEMICAL', 'https://www.pharmgkb.org/chemical/')
 PHARMGKB_DISEASE = CurieNamespace('PHARMGKB_DISEASE', 'https://www.pharmgkb.org/disease/')
+PHARMGKB_DRUG = CurieNamespace('PHARMGKB_DRUG', 'https://www.pharmgkb.org/chemical/')
 PHARMGKB_GENE = CurieNamespace('PHARMGKB_GENE', 'https://www.pharmgkb.org/gene/')
 PHARMGKB_PATHWAYS = CurieNamespace('PHARMGKB_PATHWAYS', 'https://www.pharmgkb.org/pathway/')
 PHARMGKB_VARIANT = CurieNamespace('PHARMGKB_VARIANT', 'https://www.pharmgkb.org/variant/')
@@ -301,14 +302,6 @@ class ChemicalFormulaValue(str):
     type_class_curie = "xsd:string"
     type_name = "chemical formula value"
     type_model_uri = BIOLINK.ChemicalFormulaValue
-
-
-class CategoryType(Uriorcurie):
-    """ A primitive type in which the value denotes a class within the biolink model. The value must be a URI or a CURIE. In a Neo4j representation, the value should be the CURIE for the biolink class, for example biolink:Gene. For an RDF representation, the value should be a URI such as https://w3id.org/biolink/vocab/Gene """
-    type_class_uri = XSD["anyURI"]
-    type_class_curie = "xsd:anyURI"
-    type_name = "category type"
-    type_model_uri = BIOLINK.CategoryType
 
 
 class IriType(Uriorcurie):
@@ -1157,6 +1150,10 @@ class ExposureEventToOutcomeAssociationId(AssociationId):
     pass
 
 
+class PhenotypicFeatureToPhenotypicFeatureAssociationId(AssociationId):
+    pass
+
+
 class InformationContentEntityToNamedThingAssociationId(AssociationId):
     pass
 
@@ -1663,7 +1660,7 @@ class Entity(YAMLRoot):
 
     id: Union[str, EntityId] = None
     iri: Optional[Union[str, IriType]] = None
-    category: Optional[Union[Union[str, CategoryType], List[Union[str, CategoryType]]]] = empty_list()
+    category: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
     type: Optional[Union[str, List[str]]] = empty_list()
     name: Optional[Union[str, LabelType]] = None
     description: Optional[Union[str, NarrativeText]] = None
@@ -1681,7 +1678,7 @@ class Entity(YAMLRoot):
 
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
         if not isinstance(self.type, list):
             self.type = [self.type] if self.type is not None else []
@@ -1741,7 +1738,7 @@ class NamedThing(Entity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.NamedThing
 
     id: Union[str, NamedThingId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     provided_by: Optional[Union[str, List[str]]] = empty_list()
     xref: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
     full_name: Optional[Union[str, LabelType]] = None
@@ -1757,7 +1754,7 @@ class NamedThing(Entity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
         if not isinstance(self.provided_by, list):
             self.provided_by = [self.provided_by] if self.provided_by is not None else []
@@ -1779,7 +1776,7 @@ class NamedThing(Entity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
     def __new__(cls, *args, **kwargs):
@@ -1821,7 +1818,7 @@ class Attribute(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Attribute
 
     id: Union[str, AttributeId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     name: Optional[Union[str, LabelType]] = None
     has_quantitative_value: Optional[Union[Union[dict, QuantityValue], List[Union[dict, QuantityValue]]]] = empty_list()
@@ -1857,7 +1854,7 @@ class Attribute(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -1873,7 +1870,7 @@ class ChemicalRole(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ChemicalRole
 
     id: Union[str, ChemicalRoleId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -1887,7 +1884,7 @@ class ChemicalRole(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -1900,7 +1897,7 @@ class BiologicalSex(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.BiologicalSex
 
     id: Union[str, BiologicalSexId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -1914,7 +1911,7 @@ class BiologicalSex(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -1930,7 +1927,7 @@ class PhenotypicSex(BiologicalSex):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PhenotypicSex
 
     id: Union[str, PhenotypicSexId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -1944,7 +1941,7 @@ class PhenotypicSex(BiologicalSex):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -1961,7 +1958,7 @@ class GenotypicSex(BiologicalSex):
     class_model_uri: ClassVar[URIRef] = BIOLINK.GenotypicSex
 
     id: Union[str, GenotypicSexId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -1975,7 +1972,7 @@ class GenotypicSex(BiologicalSex):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -1991,7 +1988,7 @@ class SeverityValue(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.SeverityValue
 
     id: Union[str, SeverityValueId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -2005,7 +2002,7 @@ class SeverityValue(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2068,7 +2065,7 @@ class OrganismTaxon(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.OrganismTaxon
 
     id: Union[str, OrganismTaxonId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_taxonomic_rank: Optional[Union[str, TaxonomicRankId]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -2085,7 +2082,7 @@ class OrganismTaxon(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2101,7 +2098,7 @@ class Event(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Event
 
     id: Union[str, EventId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2114,7 +2111,7 @@ class Event(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2127,7 +2124,7 @@ class AdministrativeEntity(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.AdministrativeEntity
 
     id: Union[str, AdministrativeEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
 
@@ -2136,7 +2133,7 @@ class AdministrativeEntity(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2152,7 +2149,7 @@ class Agent(AdministrativeEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Agent
 
     id: Union[str, AgentId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     affiliation: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
     address: Optional[str] = None
     name: Optional[Union[str, LabelType]] = None
@@ -2178,7 +2175,7 @@ class Agent(AdministrativeEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2194,7 +2191,7 @@ class InformationContentEntity(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.InformationContentEntity
 
     id: Union[str, InformationContentEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     license: Optional[str] = None
     rights: Optional[str] = None
     format: Optional[str] = None
@@ -2218,7 +2215,7 @@ class InformationContentEntity(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2236,7 +2233,7 @@ class StudyResult(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.StudyResult
 
     id: Union[str, StudyResultId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
 
@@ -2245,7 +2242,7 @@ class StudyResult(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2261,7 +2258,7 @@ class StudyVariable(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.StudyVariable
 
     id: Union[str, StudyVariableId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2274,7 +2271,7 @@ class StudyVariable(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2292,7 +2289,7 @@ class CommonDataElement(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.CommonDataElement
 
     id: Union[str, CommonDataElementId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2305,7 +2302,7 @@ class CommonDataElement(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2321,7 +2318,7 @@ class ConceptCountAnalysisResult(StudyResult):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ConceptCountAnalysisResult
 
     id: Union[str, ConceptCountAnalysisResultId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2334,7 +2331,7 @@ class ConceptCountAnalysisResult(StudyResult):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2350,7 +2347,7 @@ class ObservedExpectedFrequencyAnalysisResult(StudyResult):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ObservedExpectedFrequencyAnalysisResult
 
     id: Union[str, ObservedExpectedFrequencyAnalysisResultId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2363,7 +2360,7 @@ class ObservedExpectedFrequencyAnalysisResult(StudyResult):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2379,7 +2376,7 @@ class RelativeFrequencyAnalysisResult(StudyResult):
     class_model_uri: ClassVar[URIRef] = BIOLINK.RelativeFrequencyAnalysisResult
 
     id: Union[str, RelativeFrequencyAnalysisResultId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2392,7 +2389,7 @@ class RelativeFrequencyAnalysisResult(StudyResult):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2408,7 +2405,7 @@ class TextMiningResult(StudyResult):
     class_model_uri: ClassVar[URIRef] = BIOLINK.TextMiningResult
 
     id: Union[str, TextMiningResultId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2421,7 +2418,7 @@ class TextMiningResult(StudyResult):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2437,7 +2434,7 @@ class ChiSquaredAnalysisResult(StudyResult):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ChiSquaredAnalysisResult
 
     id: Union[str, ChiSquaredAnalysisResultId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2450,7 +2447,7 @@ class ChiSquaredAnalysisResult(StudyResult):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2466,7 +2463,7 @@ class LogOddsAnalysisResult(StudyResult):
     class_model_uri: ClassVar[URIRef] = BIOLINK.LogOddsAnalysisResult
 
     id: Union[str, LogOddsAnalysisResultId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2479,7 +2476,7 @@ class LogOddsAnalysisResult(StudyResult):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2495,7 +2492,7 @@ class Dataset(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Dataset
 
     id: Union[str, DatasetId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2508,7 +2505,7 @@ class Dataset(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2524,7 +2521,7 @@ class DatasetDistribution(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.DatasetDistribution
 
     id: Union[str, DatasetDistributionId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     distribution_download_url: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -2541,7 +2538,7 @@ class DatasetDistribution(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2557,7 +2554,7 @@ class DatasetVersion(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.DatasetVersion
 
     id: Union[str, DatasetVersionId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_dataset: Optional[Union[str, DatasetId]] = None
     ingest_date: Optional[str] = None
     has_distribution: Optional[Union[str, DatasetDistributionId]] = None
@@ -2582,7 +2579,7 @@ class DatasetVersion(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2598,7 +2595,7 @@ class DatasetSummary(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.DatasetSummary
 
     id: Union[str, DatasetSummaryId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     source_web_page: Optional[str] = None
     source_logo: Optional[str] = None
 
@@ -2619,7 +2616,7 @@ class DatasetSummary(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2635,7 +2632,7 @@ class ConfidenceLevel(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ConfidenceLevel
 
     id: Union[str, ConfidenceLevelId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2648,7 +2645,7 @@ class ConfidenceLevel(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2664,7 +2661,7 @@ class EvidenceType(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.EvidenceType
 
     id: Union[str, EvidenceTypeId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -2677,7 +2674,7 @@ class EvidenceType(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2697,7 +2694,7 @@ class Publication(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Publication
 
     id: Union[str, PublicationId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     publication_type: Union[str, List[str]] = None
     authors: Optional[Union[Union[str, AgentId], List[Union[str, AgentId]]]] = empty_list()
     pages: Optional[Union[str, List[str]]] = empty_list()
@@ -2750,7 +2747,7 @@ class Publication(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2766,7 +2763,7 @@ class Book(Publication):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Book
 
     id: Union[str, BookId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     publication_type: Union[str, List[str]] = None
     type: Optional[Union[str, List[str]]] = empty_list()
 
@@ -2785,7 +2782,7 @@ class Book(Publication):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2798,7 +2795,7 @@ class BookChapter(Publication):
     class_model_uri: ClassVar[URIRef] = BIOLINK.BookChapter
 
     id: Union[str, BookChapterId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     publication_type: Union[str, List[str]] = None
     published_in: Union[str, URIorCURIE] = None
     volume: Optional[str] = None
@@ -2826,7 +2823,7 @@ class BookChapter(Publication):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2842,7 +2839,7 @@ class Serial(Publication):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Serial
 
     id: Union[str, SerialId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     publication_type: Union[str, List[str]] = None
     iso_abbreviation: Optional[str] = None
     volume: Optional[str] = None
@@ -2873,7 +2870,7 @@ class Serial(Publication):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2889,7 +2886,7 @@ class Article(Publication):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Article
 
     id: Union[str, ArticleId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     publication_type: Union[str, List[str]] = None
     published_in: Union[str, URIorCURIE] = None
     iso_abbreviation: Optional[str] = None
@@ -2921,7 +2918,7 @@ class Article(Publication):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2937,7 +2934,7 @@ class JournalArticle(Article):
     class_model_uri: ClassVar[URIRef] = BIOLINK.JournalArticle
 
     id: Union[str, JournalArticleId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     publication_type: Union[str, List[str]] = None
     published_in: Union[str, URIorCURIE] = None
 
@@ -2952,7 +2949,7 @@ class JournalArticle(Article):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -2969,7 +2966,7 @@ class Patent(Publication):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Patent
 
     id: Union[str, PatentId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     publication_type: Union[str, List[str]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -2983,7 +2980,7 @@ class Patent(Publication):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3000,7 +2997,7 @@ class WebPage(Publication):
     class_model_uri: ClassVar[URIRef] = BIOLINK.WebPage
 
     id: Union[str, WebPageId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     publication_type: Union[str, List[str]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -3014,7 +3011,7 @@ class WebPage(Publication):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3031,7 +3028,7 @@ class PreprintPublication(Publication):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PreprintPublication
 
     id: Union[str, PreprintPublicationId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     publication_type: Union[str, List[str]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -3045,7 +3042,7 @@ class PreprintPublication(Publication):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3063,7 +3060,7 @@ class DrugLabel(Publication):
     class_model_uri: ClassVar[URIRef] = BIOLINK.DrugLabel
 
     id: Union[str, DrugLabelId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     publication_type: Union[str, List[str]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -3077,7 +3074,7 @@ class DrugLabel(Publication):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3094,7 +3091,7 @@ class RetrievalSource(InformationContentEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.RetrievalSource
 
     id: Union[str, RetrievalSourceId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     resource_id: Union[str, URIorCURIE] = None
     resource_role: Union[str, "ResourceRoleEnum"] = None
     upstream_resource_ids: Optional[Union[str, URIorCURIE]] = None
@@ -3128,7 +3125,7 @@ class RetrievalSource(InformationContentEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 class PhysicalEssenceOrOccurrent(YAMLRoot):
@@ -3168,7 +3165,7 @@ class PhysicalEntity(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PhysicalEntity
 
     id: Union[str, PhysicalEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3181,7 +3178,7 @@ class PhysicalEntity(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 class Occurrent(PhysicalEssenceOrOccurrent):
@@ -3222,7 +3219,7 @@ class Activity(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Activity
 
     id: Union[str, ActivityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3235,7 +3232,7 @@ class Activity(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3251,7 +3248,7 @@ class Study(Activity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Study
 
     id: Union[str, StudyId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3264,7 +3261,7 @@ class Study(Activity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3280,7 +3277,7 @@ class Procedure(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Procedure
 
     id: Union[str, ProcedureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3293,7 +3290,7 @@ class Procedure(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3309,7 +3306,7 @@ class Phenomenon(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Phenomenon
 
     id: Union[str, PhenomenonId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3322,7 +3319,7 @@ class Phenomenon(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3338,7 +3335,7 @@ class Device(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Device
 
     id: Union[str, DeviceId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3351,7 +3348,7 @@ class Device(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3367,7 +3364,7 @@ class DiagnosticAid(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.DiagnosticAid
 
     id: Union[str, DiagnosticAidId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3380,7 +3377,7 @@ class DiagnosticAid(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 class SubjectOfInvestigation(YAMLRoot):
@@ -3410,7 +3407,7 @@ class MaterialSample(PhysicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.MaterialSample
 
     id: Union[str, MaterialSampleId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3423,7 +3420,7 @@ class MaterialSample(PhysicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3439,7 +3436,7 @@ class PlanetaryEntity(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PlanetaryEntity
 
     id: Union[str, PlanetaryEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3452,7 +3449,7 @@ class PlanetaryEntity(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3465,7 +3462,7 @@ class EnvironmentalProcess(PlanetaryEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.EnvironmentalProcess
 
     id: Union[str, EnvironmentalProcessId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3478,7 +3475,7 @@ class EnvironmentalProcess(PlanetaryEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3491,7 +3488,7 @@ class EnvironmentalFeature(PlanetaryEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.EnvironmentalFeature
 
     id: Union[str, EnvironmentalFeatureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3504,7 +3501,7 @@ class EnvironmentalFeature(PlanetaryEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3520,7 +3517,7 @@ class GeographicLocation(PlanetaryEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.GeographicLocation
 
     id: Union[str, GeographicLocationId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     latitude: Optional[float] = None
     longitude: Optional[float] = None
 
@@ -3541,7 +3538,7 @@ class GeographicLocation(PlanetaryEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3557,7 +3554,7 @@ class GeographicLocationAtTime(GeographicLocation):
     class_model_uri: ClassVar[URIRef] = BIOLINK.GeographicLocationAtTime
 
     id: Union[str, GeographicLocationAtTimeId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     timepoint: Optional[Union[str, TimeType]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -3574,7 +3571,7 @@ class GeographicLocationAtTime(GeographicLocation):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3614,7 +3611,7 @@ class BiologicalEntity(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.BiologicalEntity
 
     id: Union[str, BiologicalEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     in_taxon: Optional[Union[Union[str, OrganismTaxonId], List[Union[str, OrganismTaxonId]]]] = empty_list()
     in_taxon_label: Optional[Union[str, LabelType]] = None
 
@@ -3631,7 +3628,7 @@ class BiologicalEntity(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3683,8 +3680,8 @@ class ChemicalEntity(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ChemicalEntity
 
     id: Union[str, ChemicalEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
-    trade_name: Optional[Union[str, ChemicalEntityId]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
+    trade_name: Optional[str] = None
     available_from: Optional[Union[Union[str, "DrugAvailabilityEnum"], List[Union[str, "DrugAvailabilityEnum"]]]] = empty_list()
     max_tolerated_dose: Optional[str] = None
     is_toxic: Optional[Union[bool, Bool]] = None
@@ -3696,8 +3693,8 @@ class ChemicalEntity(NamedThing):
         if not isinstance(self.id, ChemicalEntityId):
             self.id = ChemicalEntityId(self.id)
 
-        if self.trade_name is not None and not isinstance(self.trade_name, ChemicalEntityId):
-            self.trade_name = ChemicalEntityId(self.trade_name)
+        if self.trade_name is not None and not isinstance(self.trade_name, str):
+            self.trade_name = str(self.trade_name)
 
         if not isinstance(self.available_from, list):
             self.available_from = [self.available_from] if self.available_from is not None else []
@@ -3718,7 +3715,7 @@ class ChemicalEntity(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3734,7 +3731,7 @@ class MolecularEntity(ChemicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.MolecularEntity
 
     id: Union[str, MolecularEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     is_metabolite: Optional[Union[bool, Bool]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -3751,7 +3748,7 @@ class MolecularEntity(ChemicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3770,7 +3767,7 @@ class SmallMolecule(MolecularEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.SmallMolecule
 
     id: Union[str, SmallMoleculeId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -3783,7 +3780,7 @@ class SmallMolecule(MolecularEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3799,10 +3796,10 @@ class ChemicalMixture(ChemicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ChemicalMixture
 
     id: Union[str, ChemicalMixtureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
-    is_supplement: Optional[Union[str, ChemicalMixtureId]] = None
-    highest_FDA_approval_status: Optional[str] = None
-    drug_regulatory_status_world_wide: Optional[str] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
+    is_supplement: Optional[str] = None
+    highest_FDA_approval_status: Optional[Union[str, "ApprovalStatusEnum"]] = None
+    drug_regulatory_status_world_wide: Optional[Union[str, "ApprovalStatusEnum"]] = None
     routes_of_delivery: Optional[Union[Union[str, "DrugDeliveryEnum"], List[Union[str, "DrugDeliveryEnum"]]]] = empty_list()
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -3811,14 +3808,14 @@ class ChemicalMixture(ChemicalEntity):
         if not isinstance(self.id, ChemicalMixtureId):
             self.id = ChemicalMixtureId(self.id)
 
-        if self.is_supplement is not None and not isinstance(self.is_supplement, ChemicalMixtureId):
-            self.is_supplement = ChemicalMixtureId(self.is_supplement)
+        if self.is_supplement is not None and not isinstance(self.is_supplement, str):
+            self.is_supplement = str(self.is_supplement)
 
-        if self.highest_FDA_approval_status is not None and not isinstance(self.highest_FDA_approval_status, str):
-            self.highest_FDA_approval_status = str(self.highest_FDA_approval_status)
+        if self.highest_FDA_approval_status is not None and not isinstance(self.highest_FDA_approval_status, ApprovalStatusEnum):
+            self.highest_FDA_approval_status = ApprovalStatusEnum(self.highest_FDA_approval_status)
 
-        if self.drug_regulatory_status_world_wide is not None and not isinstance(self.drug_regulatory_status_world_wide, str):
-            self.drug_regulatory_status_world_wide = str(self.drug_regulatory_status_world_wide)
+        if self.drug_regulatory_status_world_wide is not None and not isinstance(self.drug_regulatory_status_world_wide, ApprovalStatusEnum):
+            self.drug_regulatory_status_world_wide = ApprovalStatusEnum(self.drug_regulatory_status_world_wide)
 
         if not isinstance(self.routes_of_delivery, list):
             self.routes_of_delivery = [self.routes_of_delivery] if self.routes_of_delivery is not None else []
@@ -3829,7 +3826,7 @@ class ChemicalMixture(ChemicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3847,7 +3844,7 @@ class NucleicAcidEntity(MolecularEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.NucleicAcidEntity
 
     id: Union[str, NucleicAcidEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
     in_taxon: Optional[Union[Union[str, OrganismTaxonId], List[Union[str, OrganismTaxonId]]]] = empty_list()
     in_taxon_label: Optional[Union[str, LabelType]] = None
@@ -3873,7 +3870,7 @@ class NucleicAcidEntity(MolecularEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3890,7 +3887,7 @@ class RegulatoryRegion(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.RegulatoryRegion
 
     id: Union[str, RegulatoryRegionId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -3907,7 +3904,7 @@ class RegulatoryRegion(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3924,7 +3921,7 @@ class AccessibleDnaRegion(RegulatoryRegion):
     class_model_uri: ClassVar[URIRef] = BIOLINK.AccessibleDnaRegion
 
     id: Union[str, AccessibleDnaRegionId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -3941,7 +3938,7 @@ class AccessibleDnaRegion(RegulatoryRegion):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3958,7 +3955,7 @@ class TranscriptionFactorBindingSite(RegulatoryRegion):
     class_model_uri: ClassVar[URIRef] = BIOLINK.TranscriptionFactorBindingSite
 
     id: Union[str, TranscriptionFactorBindingSiteId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -3975,7 +3972,7 @@ class TranscriptionFactorBindingSite(RegulatoryRegion):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -3992,7 +3989,7 @@ class MolecularMixture(ChemicalMixture):
     class_model_uri: ClassVar[URIRef] = BIOLINK.MolecularMixture
 
     id: Union[str, MolecularMixtureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4005,7 +4002,7 @@ class MolecularMixture(ChemicalMixture):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4022,7 +4019,7 @@ class ComplexMolecularMixture(ChemicalMixture):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ComplexMolecularMixture
 
     id: Union[str, ComplexMolecularMixtureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4035,7 +4032,7 @@ class ComplexMolecularMixture(ChemicalMixture):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4052,7 +4049,7 @@ class BiologicalProcessOrActivity(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.BiologicalProcessOrActivity
 
     id: Union[str, BiologicalProcessOrActivityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_input: Optional[Union[Union[str, NamedThingId], List[Union[str, NamedThingId]]]] = empty_list()
     has_output: Optional[Union[Union[str, NamedThingId], List[Union[str, NamedThingId]]]] = empty_list()
     enabled_by: Optional[Union[Union[str, PhysicalEntityId], List[Union[str, PhysicalEntityId]]]] = empty_list()
@@ -4080,7 +4077,7 @@ class BiologicalProcessOrActivity(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4096,7 +4093,7 @@ class MolecularActivity(BiologicalProcessOrActivity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.MolecularActivity
 
     id: Union[str, MolecularActivityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_input: Optional[Union[Union[str, MolecularEntityId], List[Union[str, MolecularEntityId]]]] = empty_list()
     has_output: Optional[Union[Union[str, MolecularEntityId], List[Union[str, MolecularEntityId]]]] = empty_list()
     enabled_by: Optional[Union[Union[dict, "MacromolecularMachineMixin"], List[Union[dict, "MacromolecularMachineMixin"]]]] = empty_list()
@@ -4124,7 +4121,7 @@ class MolecularActivity(BiologicalProcessOrActivity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4140,7 +4137,7 @@ class BiologicalProcess(BiologicalProcessOrActivity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.BiologicalProcess
 
     id: Union[str, BiologicalProcessId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4153,7 +4150,7 @@ class BiologicalProcess(BiologicalProcessOrActivity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4166,7 +4163,7 @@ class Pathway(BiologicalProcess):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Pathway
 
     id: Union[str, PathwayId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4179,7 +4176,7 @@ class Pathway(BiologicalProcess):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4192,7 +4189,7 @@ class PhysiologicalProcess(BiologicalProcess):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PhysiologicalProcess
 
     id: Union[str, PhysiologicalProcessId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4205,7 +4202,7 @@ class PhysiologicalProcess(BiologicalProcess):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4218,7 +4215,7 @@ class Behavior(BiologicalProcess):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Behavior
 
     id: Union[str, BehaviorId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4231,7 +4228,7 @@ class Behavior(BiologicalProcess):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4248,7 +4245,7 @@ class ProcessedMaterial(ChemicalMixture):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ProcessedMaterial
 
     id: Union[str, ProcessedMaterialId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4261,7 +4258,7 @@ class ProcessedMaterial(ChemicalMixture):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4277,7 +4274,7 @@ class Drug(MolecularMixture):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Drug
 
     id: Union[str, DrugId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4290,7 +4287,7 @@ class Drug(MolecularMixture):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4303,7 +4300,7 @@ class EnvironmentalFoodContaminant(ChemicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.EnvironmentalFoodContaminant
 
     id: Union[str, EnvironmentalFoodContaminantId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4316,7 +4313,7 @@ class EnvironmentalFoodContaminant(ChemicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4329,7 +4326,7 @@ class FoodAdditive(ChemicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.FoodAdditive
 
     id: Union[str, FoodAdditiveId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4342,7 +4339,7 @@ class FoodAdditive(ChemicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4358,7 +4355,7 @@ class Food(ChemicalMixture):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Food
 
     id: Union[str, FoodId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4371,7 +4368,7 @@ class Food(ChemicalMixture):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4387,7 +4384,7 @@ class OrganismAttribute(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.OrganismAttribute
 
     id: Union[str, OrganismAttributeId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -4401,7 +4398,7 @@ class OrganismAttribute(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4417,7 +4414,7 @@ class PhenotypicQuality(OrganismAttribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PhenotypicQuality
 
     id: Union[str, PhenotypicQualityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -4431,7 +4428,7 @@ class PhenotypicQuality(OrganismAttribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4448,7 +4445,7 @@ class GeneticInheritance(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.GeneticInheritance
 
     id: Union[str, GeneticInheritanceId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4461,7 +4458,7 @@ class GeneticInheritance(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4478,7 +4475,7 @@ class OrganismalEntity(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.OrganismalEntity
 
     id: Union[str, OrganismalEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute: Optional[Union[Union[str, AttributeId], List[Union[str, AttributeId]]]] = empty_list()
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -4491,7 +4488,7 @@ class OrganismalEntity(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4508,7 +4505,7 @@ class Bacterium(OrganismalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Bacterium
 
     id: Union[str, BacteriumId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4521,7 +4518,7 @@ class Bacterium(OrganismalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4537,7 +4534,7 @@ class Virus(OrganismalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Virus
 
     id: Union[str, VirusId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4550,7 +4547,7 @@ class Virus(OrganismalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4563,7 +4560,7 @@ class CellularOrganism(OrganismalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.CellularOrganism
 
     id: Union[str, CellularOrganismId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4576,7 +4573,7 @@ class CellularOrganism(OrganismalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4593,7 +4590,7 @@ class Mammal(CellularOrganism):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Mammal
 
     id: Union[str, MammalId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4606,7 +4603,7 @@ class Mammal(CellularOrganism):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4622,7 +4619,7 @@ class Human(Mammal):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Human
 
     id: Union[str, HumanId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4635,7 +4632,7 @@ class Human(Mammal):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4648,7 +4645,7 @@ class Plant(CellularOrganism):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Plant
 
     id: Union[str, PlantId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4661,7 +4658,7 @@ class Plant(CellularOrganism):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4677,7 +4674,7 @@ class Invertebrate(CellularOrganism):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Invertebrate
 
     id: Union[str, InvertebrateId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4690,7 +4687,7 @@ class Invertebrate(CellularOrganism):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4706,7 +4703,7 @@ class Vertebrate(CellularOrganism):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Vertebrate
 
     id: Union[str, VertebrateId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4719,7 +4716,7 @@ class Vertebrate(CellularOrganism):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4737,7 +4734,7 @@ class Fungus(CellularOrganism):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Fungus
 
     id: Union[str, FungusId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4750,7 +4747,7 @@ class Fungus(CellularOrganism):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4766,7 +4763,7 @@ class LifeStage(OrganismalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.LifeStage
 
     id: Union[str, LifeStageId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4779,7 +4776,7 @@ class LifeStage(OrganismalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4796,7 +4793,7 @@ class IndividualOrganism(OrganismalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.IndividualOrganism
 
     id: Union[str, IndividualOrganismId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4809,7 +4806,7 @@ class IndividualOrganism(OrganismalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4826,7 +4823,7 @@ class PopulationOfIndividualOrganisms(OrganismalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PopulationOfIndividualOrganisms
 
     id: Union[str, PopulationOfIndividualOrganismsId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4839,7 +4836,7 @@ class PopulationOfIndividualOrganisms(OrganismalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4855,7 +4852,7 @@ class StudyPopulation(PopulationOfIndividualOrganisms):
     class_model_uri: ClassVar[URIRef] = BIOLINK.StudyPopulation
 
     id: Union[str, StudyPopulationId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4868,7 +4865,7 @@ class StudyPopulation(PopulationOfIndividualOrganisms):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4887,7 +4884,7 @@ class DiseaseOrPhenotypicFeature(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.DiseaseOrPhenotypicFeature
 
     id: Union[str, DiseaseOrPhenotypicFeatureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4900,7 +4897,7 @@ class DiseaseOrPhenotypicFeature(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4918,7 +4915,7 @@ class Disease(DiseaseOrPhenotypicFeature):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Disease
 
     id: Union[str, DiseaseId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4931,7 +4928,7 @@ class Disease(DiseaseOrPhenotypicFeature):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4948,7 +4945,7 @@ class PhenotypicFeature(DiseaseOrPhenotypicFeature):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PhenotypicFeature
 
     id: Union[str, PhenotypicFeatureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4961,7 +4958,7 @@ class PhenotypicFeature(DiseaseOrPhenotypicFeature):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -4977,7 +4974,7 @@ class BehavioralFeature(PhenotypicFeature):
     class_model_uri: ClassVar[URIRef] = BIOLINK.BehavioralFeature
 
     id: Union[str, BehavioralFeatureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -4990,7 +4987,7 @@ class BehavioralFeature(PhenotypicFeature):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5006,7 +5003,7 @@ class AnatomicalEntity(OrganismalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.AnatomicalEntity
 
     id: Union[str, AnatomicalEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5019,7 +5016,7 @@ class AnatomicalEntity(OrganismalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5035,7 +5032,7 @@ class CellularComponent(AnatomicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.CellularComponent
 
     id: Union[str, CellularComponentId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5048,7 +5045,7 @@ class CellularComponent(AnatomicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5061,7 +5058,7 @@ class Cell(AnatomicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Cell
 
     id: Union[str, CellId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5074,7 +5071,7 @@ class Cell(AnatomicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5087,7 +5084,7 @@ class CellLine(OrganismalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.CellLine
 
     id: Union[str, CellLineId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5100,7 +5097,7 @@ class CellLine(OrganismalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5113,7 +5110,7 @@ class GrossAnatomicalStructure(AnatomicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.GrossAnatomicalStructure
 
     id: Union[str, GrossAnatomicalStructureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5126,7 +5123,7 @@ class GrossAnatomicalStructure(AnatomicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 class ChemicalEntityOrGeneOrGeneProduct(YAMLRoot):
@@ -5203,7 +5200,7 @@ class Gene(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Gene
 
     id: Union[str, GeneId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     name: Optional[Union[str, LabelType]] = None
     symbol: Optional[str] = None
     xref: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
@@ -5233,7 +5230,7 @@ class Gene(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5292,7 +5289,7 @@ class MacromolecularComplex(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.MacromolecularComplex
 
     id: Union[str, MacromolecularComplexId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     name: Optional[Union[str, LabelType]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -5309,7 +5306,7 @@ class MacromolecularComplex(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5326,7 +5323,7 @@ class NucleosomeModification(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.NucleosomeModification
 
     id: Union[str, NucleosomeModificationId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     name: Optional[Union[str, LabelType]] = None
     xref: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
     synonym: Optional[Union[Union[str, LabelType], List[Union[str, LabelType]]]] = empty_list()
@@ -5357,7 +5354,7 @@ class NucleosomeModification(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5373,7 +5370,7 @@ class Genome(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Genome
 
     id: Union[str, GenomeId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -5390,7 +5387,7 @@ class Genome(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5407,7 +5404,7 @@ class Exon(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Exon
 
     id: Union[str, ExonId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5420,7 +5417,7 @@ class Exon(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5436,7 +5433,7 @@ class Transcript(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Transcript
 
     id: Union[str, TranscriptId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5449,7 +5446,7 @@ class Transcript(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5462,7 +5459,7 @@ class CodingSequence(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.CodingSequence
 
     id: Union[str, CodingSequenceId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -5479,7 +5476,7 @@ class CodingSequence(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5497,7 +5494,7 @@ class Polypeptide(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Polypeptide
 
     id: Union[str, PolypeptideId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5510,7 +5507,7 @@ class Polypeptide(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5527,7 +5524,7 @@ class Protein(Polypeptide):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Protein
 
     id: Union[str, ProteinId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     name: Optional[Union[str, LabelType]] = None
     xref: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
     synonym: Optional[Union[Union[str, LabelType], List[Union[str, LabelType]]]] = empty_list()
@@ -5554,7 +5551,7 @@ class Protein(Polypeptide):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5571,7 +5568,7 @@ class ProteinIsoform(Protein):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ProteinIsoform
 
     id: Union[str, ProteinIsoformId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     name: Optional[Union[str, LabelType]] = None
     xref: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
     synonym: Optional[Union[Union[str, LabelType], List[Union[str, LabelType]]]] = empty_list()
@@ -5598,7 +5595,7 @@ class ProteinIsoform(Protein):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5616,7 +5613,7 @@ class ProteinDomain(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ProteinDomain
 
     id: Union[str, ProteinDomainId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_gene_or_gene_product: Optional[Union[Union[str, GeneId], List[Union[str, GeneId]]]] = empty_list()
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -5634,7 +5631,7 @@ class ProteinDomain(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5651,7 +5648,7 @@ class PosttranslationalModification(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PosttranslationalModification
 
     id: Union[str, PosttranslationalModificationId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     name: Optional[Union[str, LabelType]] = None
     xref: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
     synonym: Optional[Union[Union[str, LabelType], List[Union[str, LabelType]]]] = empty_list()
@@ -5678,7 +5675,7 @@ class PosttranslationalModification(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5691,7 +5688,7 @@ class ProteinFamily(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ProteinFamily
 
     id: Union[str, ProteinFamilyId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_gene_or_gene_product: Optional[Union[Union[str, GeneId], List[Union[str, GeneId]]]] = empty_list()
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -5709,7 +5706,7 @@ class ProteinFamily(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5726,7 +5723,7 @@ class NucleicAcidSequenceMotif(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.NucleicAcidSequenceMotif
 
     id: Union[str, NucleicAcidSequenceMotifId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5739,7 +5736,7 @@ class NucleicAcidSequenceMotif(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5752,7 +5749,7 @@ class RNAProduct(Transcript):
     class_model_uri: ClassVar[URIRef] = BIOLINK.RNAProduct
 
     id: Union[str, RNAProductId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     name: Optional[Union[str, LabelType]] = None
     xref: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
     synonym: Optional[Union[Union[str, LabelType], List[Union[str, LabelType]]]] = empty_list()
@@ -5779,7 +5776,7 @@ class RNAProduct(Transcript):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5795,7 +5792,7 @@ class RNAProductIsoform(RNAProduct):
     class_model_uri: ClassVar[URIRef] = BIOLINK.RNAProductIsoform
 
     id: Union[str, RNAProductIsoformId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     name: Optional[Union[str, LabelType]] = None
     xref: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
     synonym: Optional[Union[Union[str, LabelType], List[Union[str, LabelType]]]] = empty_list()
@@ -5822,7 +5819,7 @@ class RNAProductIsoform(RNAProduct):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5835,7 +5832,7 @@ class NoncodingRNAProduct(RNAProduct):
     class_model_uri: ClassVar[URIRef] = BIOLINK.NoncodingRNAProduct
 
     id: Union[str, NoncodingRNAProductId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5848,7 +5845,7 @@ class NoncodingRNAProduct(RNAProduct):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5861,7 +5858,7 @@ class MicroRNA(NoncodingRNAProduct):
     class_model_uri: ClassVar[URIRef] = BIOLINK.MicroRNA
 
     id: Union[str, MicroRNAId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5874,7 +5871,7 @@ class MicroRNA(NoncodingRNAProduct):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5892,7 +5889,7 @@ class SiRNA(NoncodingRNAProduct):
     class_model_uri: ClassVar[URIRef] = BIOLINK.SiRNA
 
     id: Union[str, SiRNAId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -5905,7 +5902,7 @@ class SiRNA(NoncodingRNAProduct):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5943,7 +5940,7 @@ class GeneFamily(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.GeneFamily
 
     id: Union[str, GeneFamilyId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_gene_or_gene_product: Optional[Union[Union[str, GeneId], List[Union[str, GeneId]]]] = empty_list()
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -5961,7 +5958,7 @@ class GeneFamily(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -5974,7 +5971,7 @@ class Zygosity(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Zygosity
 
     id: Union[str, ZygosityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -5988,7 +5985,7 @@ class Zygosity(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6005,7 +6002,7 @@ class Genotype(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Genotype
 
     id: Union[str, GenotypeId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_zygosity: Optional[Union[str, ZygosityId]] = None
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
@@ -6026,7 +6023,7 @@ class Genotype(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6042,7 +6039,7 @@ class Haplotype(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Haplotype
 
     id: Union[str, HaplotypeId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -6059,7 +6056,7 @@ class Haplotype(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6075,7 +6072,7 @@ class SequenceVariant(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.SequenceVariant
 
     id: Union[str, SequenceVariantId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_gene: Optional[Union[Union[str, GeneId], List[Union[str, GeneId]]]] = empty_list()
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
@@ -6097,7 +6094,7 @@ class SequenceVariant(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6113,7 +6110,7 @@ class Snv(SequenceVariant):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Snv
 
     id: Union[str, SnvId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -6126,7 +6123,7 @@ class Snv(SequenceVariant):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6143,7 +6140,7 @@ class ReagentTargetedGene(BiologicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ReagentTargetedGene
 
     id: Union[str, ReagentTargetedGeneId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_biological_sequence: Optional[Union[str, BiologicalSequence]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -6160,7 +6157,7 @@ class ReagentTargetedGene(BiologicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6176,7 +6173,7 @@ class ClinicalAttribute(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ClinicalAttribute
 
     id: Union[str, ClinicalAttributeId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -6190,7 +6187,7 @@ class ClinicalAttribute(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6207,7 +6204,7 @@ class ClinicalMeasurement(ClinicalAttribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ClinicalMeasurement
 
     id: Union[str, ClinicalMeasurementId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -6226,7 +6223,7 @@ class ClinicalMeasurement(ClinicalAttribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6243,7 +6240,7 @@ class ClinicalModifier(ClinicalAttribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ClinicalModifier
 
     id: Union[str, ClinicalModifierId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -6257,7 +6254,7 @@ class ClinicalModifier(ClinicalAttribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6274,7 +6271,7 @@ class ClinicalCourse(ClinicalAttribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ClinicalCourse
 
     id: Union[str, ClinicalCourseId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -6288,13 +6285,13 @@ class ClinicalCourse(ClinicalAttribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
 class Onset(ClinicalCourse):
     """
-    The age group in which (disease) symptom manifestations appear
+    The age group in which (disease) symptom manifestations appear.
     """
     _inherited_slots: ClassVar[List[str]] = []
 
@@ -6304,7 +6301,7 @@ class Onset(ClinicalCourse):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Onset
 
     id: Union[str, OnsetId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -6318,7 +6315,7 @@ class Onset(ClinicalCourse):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6335,7 +6332,7 @@ class ClinicalEntity(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ClinicalEntity
 
     id: Union[str, ClinicalEntityId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -6348,7 +6345,7 @@ class ClinicalEntity(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6361,7 +6358,7 @@ class ClinicalTrial(ClinicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ClinicalTrial
 
     id: Union[str, ClinicalTrialId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -6374,7 +6371,7 @@ class ClinicalTrial(ClinicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6387,7 +6384,7 @@ class ClinicalIntervention(ClinicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ClinicalIntervention
 
     id: Union[str, ClinicalInterventionId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -6400,7 +6397,7 @@ class ClinicalIntervention(ClinicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6417,7 +6414,7 @@ class ClinicalFinding(PhenotypicFeature):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ClinicalFinding
 
     id: Union[str, ClinicalFindingId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute: Optional[Union[Union[str, ClinicalAttributeId], List[Union[str, ClinicalAttributeId]]]] = empty_list()
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -6435,7 +6432,7 @@ class ClinicalFinding(PhenotypicFeature):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6448,7 +6445,7 @@ class Hospitalization(ClinicalIntervention):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Hospitalization
 
     id: Union[str, HospitalizationId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -6461,7 +6458,7 @@ class Hospitalization(ClinicalIntervention):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6477,7 +6474,7 @@ class SocioeconomicAttribute(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.SocioeconomicAttribute
 
     id: Union[str, SocioeconomicAttributeId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -6491,7 +6488,7 @@ class SocioeconomicAttribute(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6507,7 +6504,7 @@ class Case(IndividualOrganism):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Case
 
     id: Union[str, CaseId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -6520,7 +6517,7 @@ class Case(IndividualOrganism):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6537,7 +6534,7 @@ class Cohort(StudyPopulation):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Cohort
 
     id: Union[str, CohortId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -6550,7 +6547,7 @@ class Cohort(StudyPopulation):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6591,7 +6588,7 @@ class GenomicBackgroundExposure(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.GenomicBackgroundExposure
 
     id: Union[str, GenomicBackgroundExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     timepoint: Optional[Union[str, TimeType]] = None
     has_gene_or_gene_product: Optional[Union[Union[str, GeneId], List[Union[str, GeneId]]]] = empty_list()
@@ -6627,7 +6624,7 @@ class GenomicBackgroundExposure(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 class PathologicalEntityMixin(YAMLRoot):
@@ -6656,7 +6653,7 @@ class PathologicalProcess(BiologicalProcess):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PathologicalProcess
 
     id: Union[str, PathologicalProcessId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -6669,7 +6666,7 @@ class PathologicalProcess(BiologicalProcess):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6686,7 +6683,7 @@ class PathologicalProcessExposure(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PathologicalProcessExposure
 
     id: Union[str, PathologicalProcessExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     timepoint: Optional[Union[str, TimeType]] = None
 
@@ -6704,7 +6701,7 @@ class PathologicalProcessExposure(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6721,7 +6718,7 @@ class PathologicalAnatomicalStructure(AnatomicalEntity):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PathologicalAnatomicalStructure
 
     id: Union[str, PathologicalAnatomicalStructureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -6734,7 +6731,7 @@ class PathologicalAnatomicalStructure(AnatomicalEntity):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6751,7 +6748,7 @@ class PathologicalAnatomicalExposure(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.PathologicalAnatomicalExposure
 
     id: Union[str, PathologicalAnatomicalExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     timepoint: Optional[Union[str, TimeType]] = None
 
@@ -6769,7 +6766,7 @@ class PathologicalAnatomicalExposure(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6787,7 +6784,7 @@ class DiseaseOrPhenotypicFeatureExposure(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.DiseaseOrPhenotypicFeatureExposure
 
     id: Union[str, DiseaseOrPhenotypicFeatureExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     timepoint: Optional[Union[str, TimeType]] = None
 
@@ -6805,7 +6802,7 @@ class DiseaseOrPhenotypicFeatureExposure(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6821,7 +6818,7 @@ class ChemicalExposure(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ChemicalExposure
 
     id: Union[str, ChemicalExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     has_quantitative_value: Optional[Union[Union[dict, QuantityValue], List[Union[dict, QuantityValue]]]] = empty_list()
     timepoint: Optional[Union[str, TimeType]] = None
@@ -6844,7 +6841,7 @@ class ChemicalExposure(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6860,7 +6857,7 @@ class ComplexChemicalExposure(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.ComplexChemicalExposure
 
     id: Union[str, ComplexChemicalExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -6874,7 +6871,7 @@ class ComplexChemicalExposure(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6890,7 +6887,7 @@ class DrugExposure(ChemicalExposure):
     class_model_uri: ClassVar[URIRef] = BIOLINK.DrugExposure
 
     id: Union[str, DrugExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     timepoint: Optional[Union[str, TimeType]] = None
 
@@ -6908,7 +6905,7 @@ class DrugExposure(ChemicalExposure):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6925,7 +6922,7 @@ class DrugToGeneInteractionExposure(DrugExposure):
     class_model_uri: ClassVar[URIRef] = BIOLINK.DrugToGeneInteractionExposure
 
     id: Union[str, DrugToGeneInteractionExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     has_gene_or_gene_product: Optional[Union[Union[str, GeneId], List[Union[str, GeneId]]]] = empty_list()
 
@@ -6944,7 +6941,7 @@ class DrugToGeneInteractionExposure(DrugExposure):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -6961,7 +6958,7 @@ class Treatment(NamedThing):
     class_model_uri: ClassVar[URIRef] = BIOLINK.Treatment
 
     id: Union[str, TreatmentId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_drug: Optional[Union[Union[str, DrugId], List[Union[str, DrugId]]]] = empty_list()
     has_device: Optional[Union[Union[str, DeviceId], List[Union[str, DeviceId]]]] = empty_list()
     has_procedure: Optional[Union[Union[str, ProcedureId], List[Union[str, ProcedureId]]]] = empty_list()
@@ -6993,7 +6990,7 @@ class Treatment(NamedThing):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7009,7 +7006,7 @@ class BioticExposure(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.BioticExposure
 
     id: Union[str, BioticExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     timepoint: Optional[Union[str, TimeType]] = None
 
@@ -7027,7 +7024,7 @@ class BioticExposure(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7044,7 +7041,7 @@ class EnvironmentalExposure(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.EnvironmentalExposure
 
     id: Union[str, EnvironmentalExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     timepoint: Optional[Union[str, TimeType]] = None
 
@@ -7062,7 +7059,7 @@ class EnvironmentalExposure(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7078,7 +7075,7 @@ class GeographicExposure(EnvironmentalExposure):
     class_model_uri: ClassVar[URIRef] = BIOLINK.GeographicExposure
 
     id: Union[str, GeographicExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     timepoint: Optional[Union[str, TimeType]] = None
 
@@ -7096,7 +7093,7 @@ class GeographicExposure(EnvironmentalExposure):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7112,7 +7109,7 @@ class BehavioralExposure(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.BehavioralExposure
 
     id: Union[str, BehavioralExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     timepoint: Optional[Union[str, TimeType]] = None
 
@@ -7130,7 +7127,7 @@ class BehavioralExposure(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7147,7 +7144,7 @@ class SocioeconomicExposure(Attribute):
     class_model_uri: ClassVar[URIRef] = BIOLINK.SocioeconomicExposure
 
     id: Union[str, SocioeconomicExposureId] = None
-    category: Union[Union[str, CategoryType], List[Union[str, CategoryType]]] = None
+    category: Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]] = None
     has_attribute_type: Union[str, OntologyClassId] = None
     has_attribute: Union[Union[str, SocioeconomicAttributeId], List[Union[str, SocioeconomicAttributeId]]] = None
     timepoint: Optional[Union[str, TimeType]] = None
@@ -7172,7 +7169,7 @@ class SocioeconomicExposure(Attribute):
             self.MissingRequiredField("category")
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 class Outcome(YAMLRoot):
@@ -7303,6 +7300,8 @@ class Association(Entity):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     negated: Optional[Union[bool, Bool]] = None
     qualifier: Optional[str] = None
     qualifiers: Optional[Union[Union[str, OntologyClassId], List[Union[str, OntologyClassId]]]] = empty_list()
@@ -7326,8 +7325,10 @@ class Association(Entity):
     subject_label_closure: Optional[Union[str, List[str]]] = empty_list()
     object_label_closure: Optional[Union[str, List[str]]] = empty_list()
     retrieval_source_ids: Optional[Union[Union[str, RetrievalSourceId], List[Union[str, RetrievalSourceId]]]] = empty_list()
+    p_value: Optional[float] = None
+    adjusted_p_value: Optional[float] = None
     type: Optional[Union[str, List[str]]] = empty_list()
-    category: Optional[Union[Union[str, CategoryType], List[Union[str, CategoryType]]]] = empty_list()
+    category: Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]] = empty_list()
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -7349,6 +7350,16 @@ class Association(Entity):
             self.MissingRequiredField("object")
         if not isinstance(self.object, NamedThingId):
             self.object = NamedThingId(self.object)
+
+        if self._is_empty(self.knowledge_level):
+            self.MissingRequiredField("knowledge_level")
+        if not isinstance(self.knowledge_level, KnowledgeLevelEnum):
+            self.knowledge_level = KnowledgeLevelEnum(self.knowledge_level)
+
+        if self._is_empty(self.agent_type):
+            self.MissingRequiredField("agent_type")
+        if not isinstance(self.agent_type, AgentTypeEnum):
+            self.agent_type = AgentTypeEnum(self.agent_type)
 
         if self.negated is not None and not isinstance(self.negated, Bool):
             self.negated = Bool(self.negated)
@@ -7430,18 +7441,24 @@ class Association(Entity):
             self.retrieval_source_ids = [self.retrieval_source_ids] if self.retrieval_source_ids is not None else []
         self.retrieval_source_ids = [v if isinstance(v, RetrievalSourceId) else RetrievalSourceId(v) for v in self.retrieval_source_ids]
 
+        if self.p_value is not None and not isinstance(self.p_value, float):
+            self.p_value = float(self.p_value)
+
+        if self.adjusted_p_value is not None and not isinstance(self.adjusted_p_value, float):
+            self.adjusted_p_value = float(self.adjusted_p_value)
+
         if not isinstance(self.type, list):
             self.type = [self.type] if self.type is not None else []
         self.type = [v if isinstance(v, str) else str(v) for v in self.type]
 
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
     def __new__(cls, *args, **kwargs):
@@ -7482,6 +7499,8 @@ class ChemicalEntityAssessesNamedThingAssociation(Association):
     subject: Union[str, ChemicalEntityId] = None
     object: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -7507,7 +7526,7 @@ class ChemicalEntityAssessesNamedThingAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7526,6 +7545,8 @@ class ContributorAssociation(Association):
     subject: Union[str, InformationContentEntityId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, AgentId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     qualifiers: Optional[Union[Union[str, OntologyClassId], List[Union[str, OntologyClassId]]]] = empty_list()
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -7556,7 +7577,7 @@ class ContributorAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7575,6 +7596,8 @@ class GenotypeToGenotypePartAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, GenotypeId] = None
     object: Union[str, GenotypeId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -7600,7 +7623,7 @@ class GenotypeToGenotypePartAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7620,6 +7643,8 @@ class GenotypeToGeneAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, GenotypeId] = None
     object: Union[str, GeneId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -7645,7 +7670,7 @@ class GenotypeToGeneAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7664,6 +7689,8 @@ class GenotypeToVariantAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, GenotypeId] = None
     object: Union[str, SequenceVariantId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -7689,7 +7716,7 @@ class GenotypeToVariantAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7709,6 +7736,8 @@ class GeneToGeneAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[dict, GeneOrGeneProduct] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.subject):
@@ -7724,7 +7753,7 @@ class GeneToGeneAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7744,6 +7773,8 @@ class GeneToGeneHomologyAssociation(GeneToGeneAssociation):
     subject: Union[dict, GeneOrGeneProduct] = None
     predicate: Union[str, PredicateType] = None
     object: Union[dict, GeneOrGeneProduct] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -7769,7 +7800,7 @@ class GeneToGeneHomologyAssociation(GeneToGeneAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7790,6 +7821,8 @@ class GeneToGeneFamilyAssociation(Association):
     subject: Union[str, GeneId] = None
     object: Union[str, GeneFamilyId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -7815,7 +7848,7 @@ class GeneToGeneFamilyAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7868,6 +7901,8 @@ class GeneToGeneCoexpressionAssociation(GeneToGeneAssociation):
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[dict, GeneOrGeneProduct] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     quantifier_qualifier: Optional[Union[str, OntologyClassId]] = None
     expression_site: Optional[Union[str, AnatomicalEntityId]] = None
     stage_qualifier: Optional[Union[str, LifeStageId]] = None
@@ -7899,7 +7934,7 @@ class GeneToGeneCoexpressionAssociation(GeneToGeneAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7919,6 +7954,8 @@ class PairwiseGeneToGeneInteraction(GeneToGeneAssociation):
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[dict, GeneOrGeneProduct] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -7934,7 +7971,7 @@ class PairwiseGeneToGeneInteraction(GeneToGeneAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -7953,6 +7990,8 @@ class PairwiseMolecularInteraction(PairwiseGeneToGeneInteraction):
     subject: Union[str, MolecularEntityId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, MolecularEntityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     interacting_molecules_category: Optional[Union[str, OntologyClassId]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -7982,7 +8021,7 @@ class PairwiseMolecularInteraction(PairwiseGeneToGeneInteraction):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8037,6 +8076,8 @@ class CellLineToDiseaseOrPhenotypicFeatureAssociation(Association):
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
     subject: Union[str, DiseaseOrPhenotypicFeatureId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -8062,7 +8103,7 @@ class CellLineToDiseaseOrPhenotypicFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8232,6 +8273,8 @@ class ChemicalToChemicalAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, ChemicalEntityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -8257,7 +8300,7 @@ class ChemicalToChemicalAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8273,6 +8316,8 @@ class ReactionToParticipantAssociation(ChemicalToChemicalAssociation):
     predicate: Union[str, PredicateType] = None
     object: Union[str, ChemicalEntityId] = None
     subject: Union[str, MolecularEntityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     stoichiometry: Optional[int] = None
     reaction_direction: Optional[Union[str, "ReactionDirectionEnum"]] = None
     reaction_side: Optional[Union[str, "ReactionSideEnum"]] = None
@@ -8300,7 +8345,7 @@ class ReactionToParticipantAssociation(ChemicalToChemicalAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8316,6 +8361,8 @@ class ReactionToCatalystAssociation(ReactionToParticipantAssociation):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, MolecularEntityId] = None
     object: Union[dict, GeneOrGeneProduct] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -8331,7 +8378,7 @@ class ReactionToCatalystAssociation(ReactionToParticipantAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8352,6 +8399,8 @@ class ChemicalToChemicalDerivationAssociation(ChemicalToChemicalAssociation):
     subject: Union[str, ChemicalEntityId] = None
     object: Union[str, ChemicalEntityId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     catalyst_qualifier: Optional[Union[Union[dict, MacromolecularMachineMixin], List[Union[dict, MacromolecularMachineMixin]]]] = empty_list()
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -8382,7 +8431,7 @@ class ChemicalToChemicalDerivationAssociation(ChemicalToChemicalAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8402,6 +8451,8 @@ class ChemicalToDiseaseOrPhenotypicFeatureAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, DiseaseOrPhenotypicFeatureId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -8427,7 +8478,7 @@ class ChemicalToDiseaseOrPhenotypicFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8447,6 +8498,8 @@ class ChemicalOrDrugOrTreatmentToDiseaseOrPhenotypicFeatureAssociation(Associati
     subject: Union[str, NamedThingId] = None
     object: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     FDA_adverse_event_level: Optional[Union[str, "FDAIDAAdverseEventEnum"]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -8476,7 +8529,7 @@ class ChemicalOrDrugOrTreatmentToDiseaseOrPhenotypicFeatureAssociation(Associati
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8496,6 +8549,8 @@ class ChemicalOrDrugOrTreatmentSideEffectDiseaseOrPhenotypicFeatureAssociation(C
     subject: Union[str, NamedThingId] = None
     object: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -8521,7 +8576,7 @@ class ChemicalOrDrugOrTreatmentSideEffectDiseaseOrPhenotypicFeatureAssociation(C
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8540,6 +8595,8 @@ class GeneToPathwayAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[str, PathwayId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -8565,7 +8622,7 @@ class GeneToPathwayAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8584,6 +8641,8 @@ class MolecularActivityToPathwayAssociation(Association):
     subject: Union[str, MolecularActivityId] = None
     object: Union[str, PathwayId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -8609,7 +8668,7 @@ class MolecularActivityToPathwayAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8628,6 +8687,8 @@ class ChemicalToPathwayAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, ChemicalEntityId] = None
     object: Union[str, PathwayId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -8653,7 +8714,7 @@ class ChemicalToPathwayAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8669,6 +8730,8 @@ class NamedThingAssociatedWithLikelihoodOfNamedThingAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     subject_aspect_qualifier: Optional[str] = None
     subject_context_qualifier: Optional[Union[str, OntologyClassId]] = None
     object_aspect_qualifier: Optional[str] = None
@@ -8714,7 +8777,7 @@ class NamedThingAssociatedWithLikelihoodOfNamedThingAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8735,6 +8798,8 @@ class ChemicalGeneInteractionAssociation(Association):
     subject: Union[str, ChemicalEntityId] = None
     object: Union[dict, GeneOrGeneProduct] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     subject_form_or_variant_qualifier: Optional[Union[str, "ChemicalOrGeneOrGeneProductFormOrVariantEnum"]] = None
     subject_part_qualifier: Optional[Union[str, "GeneOrGeneProductOrChemicalPartQualifierEnum"]] = None
     subject_derivative_qualifier: Optional[Union[str, "ChemicalEntityDerivativeEnum"]] = None
@@ -8792,7 +8857,7 @@ class ChemicalGeneInteractionAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8812,6 +8877,8 @@ class ChemicalAffectsGeneAssociation(Association):
     subject: Union[str, ChemicalEntityId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[dict, GeneOrGeneProduct] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     subject_form_or_variant_qualifier: Optional[Union[str, "ChemicalOrGeneOrGeneProductFormOrVariantEnum"]] = None
     subject_part_qualifier: Optional[Union[str, "GeneOrGeneProductOrChemicalPartQualifierEnum"]] = None
     subject_derivative_qualifier: Optional[Union[str, "ChemicalEntityDerivativeEnum"]] = None
@@ -8897,7 +8964,7 @@ class ChemicalAffectsGeneAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -8917,6 +8984,8 @@ class GeneAffectsChemicalAssociation(Association):
     subject: Union[dict, GeneOrGeneProduct] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, ChemicalEntityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     subject_form_or_variant_qualifier: Optional[Union[str, "ChemicalOrGeneOrGeneProductFormOrVariantEnum"]] = None
     subject_part_qualifier: Optional[Union[str, "GeneOrGeneProductOrChemicalPartQualifierEnum"]] = None
     subject_derivative_qualifier: Optional[str] = None
@@ -9006,7 +9075,7 @@ class GeneAffectsChemicalAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -9025,6 +9094,8 @@ class DrugToGeneAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[dict, GeneOrGeneProduct] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -9050,7 +9121,7 @@ class DrugToGeneAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -9104,6 +9175,8 @@ class MaterialSampleDerivationAssociation(Association):
     subject: Union[str, MaterialSampleId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -9129,7 +9202,7 @@ class MaterialSampleDerivationAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -9148,6 +9221,8 @@ class MaterialSampleToDiseaseOrPhenotypicFeatureAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -9173,7 +9248,7 @@ class MaterialSampleToDiseaseOrPhenotypicFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -9259,6 +9334,8 @@ class DiseaseToExposureEventAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -9284,7 +9361,7 @@ class DiseaseToExposureEventAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -9338,6 +9415,8 @@ class ExposureEventToOutcomeAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     population_context_qualifier: Optional[Union[str, PopulationOfIndividualOrganismsId]] = None
     temporal_context_qualifier: Optional[Union[str, TimeType]] = None
 
@@ -9371,7 +9450,7 @@ class ExposureEventToOutcomeAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -9588,6 +9667,81 @@ class PhenotypicFeatureToEntityAssociationMixin(FeatureOrDiseaseQualifiersToEnti
 
 
 @dataclass
+class PhenotypicFeatureToPhenotypicFeatureAssociation(Association):
+    """
+    Association between two concept nodes of phenotypic character, qualified by the predicate used. This association
+    may typically be used to specify 'similar_to' or 'member_of' relationships.
+    """
+    _inherited_slots: ClassVar[List[str]] = []
+
+    class_class_uri: ClassVar[URIRef] = BIOLINK["PhenotypicFeatureToPhenotypicFeatureAssociation"]
+    class_class_curie: ClassVar[str] = "biolink:PhenotypicFeatureToPhenotypicFeatureAssociation"
+    class_name: ClassVar[str] = "phenotypic feature to phenotypic feature association"
+    class_model_uri: ClassVar[URIRef] = BIOLINK.PhenotypicFeatureToPhenotypicFeatureAssociation
+
+    id: Union[str, PhenotypicFeatureToPhenotypicFeatureAssociationId] = None
+    subject: Union[str, NamedThingId] = None
+    predicate: Union[str, PredicateType] = None
+    object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
+    frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
+    subject_aspect_qualifier: Optional[str] = None
+    subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
+    object_aspect_qualifier: Optional[str] = None
+    object_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
+    qualified_predicate: Optional[str] = None
+    sex_qualifier: Optional[Union[str, BiologicalSexId]] = None
+
+    def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
+        if self._is_empty(self.id):
+            self.MissingRequiredField("id")
+        if not isinstance(self.id, PhenotypicFeatureToPhenotypicFeatureAssociationId):
+            self.id = PhenotypicFeatureToPhenotypicFeatureAssociationId(self.id)
+
+        if self._is_empty(self.subject):
+            self.MissingRequiredField("subject")
+        if not isinstance(self.subject, NamedThingId):
+            self.subject = NamedThingId(self.subject)
+
+        if self._is_empty(self.predicate):
+            self.MissingRequiredField("predicate")
+        if not isinstance(self.predicate, PredicateType):
+            self.predicate = PredicateType(self.predicate)
+
+        if self._is_empty(self.object):
+            self.MissingRequiredField("object")
+        if not isinstance(self.object, NamedThingId):
+            self.object = NamedThingId(self.object)
+
+        if self.frequency_qualifier is not None and not isinstance(self.frequency_qualifier, FrequencyValue):
+            self.frequency_qualifier = FrequencyValue(self.frequency_qualifier)
+
+        if self.subject_aspect_qualifier is not None and not isinstance(self.subject_aspect_qualifier, str):
+            self.subject_aspect_qualifier = str(self.subject_aspect_qualifier)
+
+        if self.subject_direction_qualifier is not None and not isinstance(self.subject_direction_qualifier, DirectionQualifierEnum):
+            self.subject_direction_qualifier = DirectionQualifierEnum(self.subject_direction_qualifier)
+
+        if self.object_aspect_qualifier is not None and not isinstance(self.object_aspect_qualifier, str):
+            self.object_aspect_qualifier = str(self.object_aspect_qualifier)
+
+        if self.object_direction_qualifier is not None and not isinstance(self.object_direction_qualifier, DirectionQualifierEnum):
+            self.object_direction_qualifier = DirectionQualifierEnum(self.object_direction_qualifier)
+
+        if self.qualified_predicate is not None and not isinstance(self.qualified_predicate, str):
+            self.qualified_predicate = str(self.qualified_predicate)
+
+        if self.sex_qualifier is not None and not isinstance(self.sex_qualifier, BiologicalSexId):
+            self.sex_qualifier = BiologicalSexId(self.sex_qualifier)
+
+        super().__post_init__(**kwargs)
+        if not isinstance(self.category, list):
+            self.category = [self.category] if self.category is not None else []
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
+
+
+@dataclass
 class InformationContentEntityToNamedThingAssociation(Association):
     """
     association between a named thing and a information content entity where the specific context of the relationship
@@ -9608,6 +9762,8 @@ class InformationContentEntityToNamedThingAssociation(Association):
     subject: Union[str, NamedThingId] = None
     object: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -9633,7 +9789,7 @@ class InformationContentEntityToNamedThingAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -9710,6 +9866,8 @@ class DiseaseOrPhenotypicFeatureToLocationAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, AnatomicalEntityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -9735,7 +9893,7 @@ class DiseaseOrPhenotypicFeatureToLocationAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -9754,6 +9912,8 @@ class DiseaseOrPhenotypicFeatureToGeneticInheritanceAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, GeneticInheritanceId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -9779,7 +9939,7 @@ class DiseaseOrPhenotypicFeatureToGeneticInheritanceAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -9863,6 +10023,8 @@ class GenotypeToPhenotypicFeatureAssociation(Association):
     object: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     subject: Union[str, GenotypeId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -9916,7 +10078,7 @@ class GenotypeToPhenotypicFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -9936,6 +10098,8 @@ class ExposureEventToPhenotypicFeatureAssociation(Association):
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
     subject: Union[str, ExposureEventId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -9989,7 +10153,7 @@ class ExposureEventToPhenotypicFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10009,6 +10173,9 @@ class DiseaseToPhenotypicFeatureAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, DiseaseId] = None
     object: Union[str, PhenotypicFeatureId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
+    onset_qualifier: Optional[Union[str, OnsetId]] = None
     has_count: Optional[int] = None
     has_total: Optional[int] = None
     has_quotient: Optional[float] = None
@@ -10041,6 +10208,9 @@ class DiseaseToPhenotypicFeatureAssociation(Association):
             self.MissingRequiredField("object")
         if not isinstance(self.object, PhenotypicFeatureId):
             self.object = PhenotypicFeatureId(self.object)
+
+        if self.onset_qualifier is not None and not isinstance(self.onset_qualifier, OnsetId):
+            self.onset_qualifier = OnsetId(self.onset_qualifier)
 
         if self.has_count is not None and not isinstance(self.has_count, int):
             self.has_count = int(self.has_count)
@@ -10078,7 +10248,7 @@ class DiseaseToPhenotypicFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10098,6 +10268,8 @@ class CaseToPhenotypicFeatureAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -10151,7 +10323,7 @@ class CaseToPhenotypicFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10171,6 +10343,8 @@ class BehaviorToBehavioralFeatureAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, BehaviorId] = None
     object: Union[str, BehavioralFeatureId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -10224,7 +10398,7 @@ class BehaviorToBehavioralFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10304,6 +10478,8 @@ class GeneToDiseaseOrPhenotypicFeatureAssociation(Association):
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[str, DiseaseOrPhenotypicFeatureId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     subject_aspect_qualifier: Optional[Union[str, "GeneOrGeneProductOrChemicalEntityAspectEnum"]] = None
     object_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
@@ -10357,7 +10533,7 @@ class GeneToDiseaseOrPhenotypicFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10373,6 +10549,8 @@ class GeneToPhenotypicFeatureAssociation(GeneToDiseaseOrPhenotypicFeatureAssocia
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[str, PhenotypicFeatureId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
     object_aspect_qualifier: Optional[str] = None
@@ -10413,7 +10591,7 @@ class GeneToPhenotypicFeatureAssociation(GeneToDiseaseOrPhenotypicFeatureAssocia
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10429,6 +10607,8 @@ class GeneToDiseaseAssociation(GeneToDiseaseOrPhenotypicFeatureAssociation):
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[str, DiseaseId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
     object_aspect_qualifier: Optional[str] = None
@@ -10465,7 +10645,7 @@ class GeneToDiseaseAssociation(GeneToDiseaseOrPhenotypicFeatureAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10481,6 +10661,8 @@ class CausalGeneToDiseaseAssociation(GeneToDiseaseAssociation):
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[str, DiseaseId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
     object_aspect_qualifier: Optional[str] = None
@@ -10517,7 +10699,7 @@ class CausalGeneToDiseaseAssociation(GeneToDiseaseAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10533,6 +10715,8 @@ class CorrelatedGeneToDiseaseAssociation(GeneToDiseaseAssociation):
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[str, DiseaseId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
     object_aspect_qualifier: Optional[str] = None
@@ -10569,7 +10753,7 @@ class CorrelatedGeneToDiseaseAssociation(GeneToDiseaseAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10585,6 +10769,8 @@ class DruggableGeneToDiseaseAssociation(GeneToDiseaseAssociation):
     object: Union[str, DiseaseId] = None
     subject: Union[dict, GeneOrGeneProduct] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
     object_aspect_qualifier: Optional[str] = None
@@ -10626,7 +10812,7 @@ class DruggableGeneToDiseaseAssociation(GeneToDiseaseAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10642,6 +10828,8 @@ class PhenotypicFeatureToDiseaseAssociation(Association):
     subject: Union[str, NamedThingId] = None
     object: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -10695,7 +10883,7 @@ class PhenotypicFeatureToDiseaseAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10715,6 +10903,8 @@ class VariantToGeneAssociation(Association):
     subject: Union[str, NamedThingId] = None
     object: Union[str, GeneId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -10740,7 +10930,7 @@ class VariantToGeneAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10759,6 +10949,8 @@ class VariantToGeneExpressionAssociation(VariantToGeneAssociation):
     subject: Union[str, NamedThingId] = None
     object: Union[str, GeneId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     quantifier_qualifier: Optional[Union[str, OntologyClassId]] = None
     expression_site: Optional[Union[str, AnatomicalEntityId]] = None
     stage_qualifier: Optional[Union[str, LifeStageId]] = None
@@ -10790,7 +10982,7 @@ class VariantToGeneExpressionAssociation(VariantToGeneAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10809,6 +11001,8 @@ class VariantToPopulationAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, SequenceVariantId] = None
     object: Union[str, PopulationOfIndividualOrganismsId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     has_quotient: Optional[float] = None
     has_count: Optional[int] = None
     has_total: Optional[int] = None
@@ -10854,7 +11048,7 @@ class VariantToPopulationAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10873,6 +11067,8 @@ class PopulationToPopulationAssociation(Association):
     subject: Union[str, PopulationOfIndividualOrganismsId] = None
     object: Union[str, PopulationOfIndividualOrganismsId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -10898,7 +11094,7 @@ class PopulationToPopulationAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10914,6 +11110,8 @@ class VariantToPhenotypicFeatureAssociation(Association):
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
     subject: Union[str, SequenceVariantId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -10967,7 +11165,7 @@ class VariantToPhenotypicFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -10983,6 +11181,8 @@ class VariantToDiseaseAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -11032,7 +11232,7 @@ class VariantToDiseaseAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11048,6 +11248,8 @@ class GenotypeToDiseaseAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -11097,7 +11299,7 @@ class GenotypeToDiseaseAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11150,6 +11352,8 @@ class GeneAsAModelOfDiseaseAssociation(GeneToDiseaseAssociation):
     predicate: Union[str, PredicateType] = None
     object: Union[str, DiseaseId] = None
     subject: Union[dict, GeneOrGeneProduct] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
     object_aspect_qualifier: Optional[str] = None
@@ -11181,7 +11385,7 @@ class GeneAsAModelOfDiseaseAssociation(GeneToDiseaseAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11197,6 +11401,8 @@ class VariantAsAModelOfDiseaseAssociation(VariantToDiseaseAssociation):
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
     subject: Union[str, SequenceVariantId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -11236,7 +11442,7 @@ class VariantAsAModelOfDiseaseAssociation(VariantToDiseaseAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11252,6 +11458,8 @@ class GenotypeAsAModelOfDiseaseAssociation(GenotypeToDiseaseAssociation):
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
     subject: Union[str, GenotypeId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -11291,7 +11499,7 @@ class GenotypeAsAModelOfDiseaseAssociation(GenotypeToDiseaseAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11307,6 +11515,8 @@ class CellLineAsAModelOfDiseaseAssociation(CellLineToDiseaseOrPhenotypicFeatureA
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
     subject: Union[str, CellLineId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -11356,7 +11566,7 @@ class CellLineAsAModelOfDiseaseAssociation(CellLineToDiseaseOrPhenotypicFeatureA
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11372,6 +11582,8 @@ class OrganismalEntityAsAModelOfDiseaseAssociation(Association):
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
     subject: Union[str, OrganismalEntityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     frequency_qualifier: Optional[Union[str, FrequencyValue]] = None
     subject_aspect_qualifier: Optional[str] = None
     subject_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
@@ -11421,7 +11633,7 @@ class OrganismalEntityAsAModelOfDiseaseAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11437,6 +11649,8 @@ class OrganismToOrganismAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, IndividualOrganismId] = None
     object: Union[str, IndividualOrganismId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -11457,7 +11671,7 @@ class OrganismToOrganismAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11473,6 +11687,8 @@ class TaxonToTaxonAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, OrganismTaxonId] = None
     object: Union[str, OrganismTaxonId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -11493,7 +11709,7 @@ class TaxonToTaxonAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11509,6 +11725,8 @@ class GeneHasVariantThatContributesToDiseaseAssociation(GeneToDiseaseAssociation
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[str, DiseaseId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     subject_form_or_variant_qualifier: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -11538,7 +11756,7 @@ class GeneHasVariantThatContributesToDiseaseAssociation(GeneToDiseaseAssociation
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11557,6 +11775,8 @@ class GeneToExpressionSiteAssociation(Association):
     subject: Union[dict, GeneOrGeneProduct] = None
     object: Union[str, AnatomicalEntityId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     stage_qualifier: Optional[Union[str, LifeStageId]] = None
     quantifier_qualifier: Optional[Union[str, OntologyClassId]] = None
 
@@ -11590,7 +11810,7 @@ class GeneToExpressionSiteAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11610,6 +11830,8 @@ class SequenceVariantModulatesTreatmentAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, SequenceVariantId] = None
     object: Union[str, TreatmentId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.subject):
@@ -11625,7 +11847,7 @@ class SequenceVariantModulatesTreatmentAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11645,6 +11867,8 @@ class FunctionalAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, MacromolecularMachineMixin] = None
     object: Union[str, OntologyClassId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -11665,7 +11889,7 @@ class FunctionalAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11721,6 +11945,8 @@ class MacromolecularMachineToMolecularActivityAssociation(FunctionalAssociation)
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, MacromolecularMachineMixin] = None
     object: Union[str, MolecularActivityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -11741,7 +11967,7 @@ class MacromolecularMachineToMolecularActivityAssociation(FunctionalAssociation)
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11762,6 +11988,8 @@ class MacromolecularMachineToBiologicalProcessAssociation(FunctionalAssociation)
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, MacromolecularMachineMixin] = None
     object: Union[str, BiologicalProcessId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -11782,7 +12010,7 @@ class MacromolecularMachineToBiologicalProcessAssociation(FunctionalAssociation)
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11803,6 +12031,8 @@ class MacromolecularMachineToCellularComponentAssociation(FunctionalAssociation)
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, MacromolecularMachineMixin] = None
     object: Union[str, CellularComponentId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -11823,7 +12053,7 @@ class MacromolecularMachineToCellularComponentAssociation(FunctionalAssociation)
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11843,6 +12073,8 @@ class MolecularActivityToChemicalEntityAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, MolecularActivityId] = None
     object: Union[str, ChemicalEntityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -11863,7 +12095,7 @@ class MolecularActivityToChemicalEntityAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11883,6 +12115,8 @@ class MolecularActivityToMolecularActivityAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, MolecularActivityId] = None
     object: Union[str, MolecularActivityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -11903,7 +12137,7 @@ class MolecularActivityToMolecularActivityAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11919,6 +12153,8 @@ class GeneToGoTermAssociation(FunctionalAssociation):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, GeneId] = None
     object: Union[str, OntologyClassId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -11939,7 +12175,7 @@ class GeneToGoTermAssociation(FunctionalAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11955,6 +12191,8 @@ class EntityToDiseaseAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     clinical_approval_status: Optional[Union[str, "ClinicalApprovalStatusEnum"]] = None
     max_research_phase: Optional[Union[str, "MaxResearchPhaseEnum"]] = None
 
@@ -11973,7 +12211,7 @@ class EntityToDiseaseAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -11989,6 +12227,8 @@ class EntityToPhenotypicFeatureAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     clinical_approval_status: Optional[Union[str, "ClinicalApprovalStatusEnum"]] = None
     max_research_phase: Optional[Union[str, "MaxResearchPhaseEnum"]] = None
 
@@ -12007,7 +12247,7 @@ class EntityToPhenotypicFeatureAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12026,6 +12266,8 @@ class SequenceAssociation(Association):
     subject: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
     object: Union[str, NamedThingId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -12036,7 +12278,7 @@ class SequenceAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12056,6 +12298,8 @@ class GenomicSequenceLocalization(SequenceAssociation):
     subject: Union[str, NucleicAcidEntityId] = None
     object: Union[str, NucleicAcidEntityId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     start_interbase_coordinate: Optional[int] = None
     end_interbase_coordinate: Optional[int] = None
     genome_build: Optional[Union[str, "StrandEnum"]] = None
@@ -12101,7 +12345,7 @@ class GenomicSequenceLocalization(SequenceAssociation):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12120,6 +12364,8 @@ class SequenceFeatureRelationship(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, NucleicAcidEntityId] = None
     object: Union[str, NucleicAcidEntityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -12140,7 +12386,7 @@ class SequenceFeatureRelationship(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12159,6 +12405,8 @@ class TranscriptToGeneRelationship(SequenceFeatureRelationship):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, TranscriptId] = None
     object: Union[str, GeneId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -12179,7 +12427,7 @@ class TranscriptToGeneRelationship(SequenceFeatureRelationship):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12198,6 +12446,8 @@ class GeneToGeneProductRelationship(SequenceFeatureRelationship):
     subject: Union[str, GeneId] = None
     object: Union[dict, GeneProductMixin] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -12223,7 +12473,7 @@ class GeneToGeneProductRelationship(SequenceFeatureRelationship):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12242,6 +12492,8 @@ class ExonToTranscriptRelationship(SequenceFeatureRelationship):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, ExonId] = None
     object: Union[str, TranscriptId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -12262,7 +12514,7 @@ class ExonToTranscriptRelationship(SequenceFeatureRelationship):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12281,6 +12533,8 @@ class ChemicalEntityOrGeneOrGeneProductRegulatesGeneAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[dict, ChemicalEntityOrGeneOrGeneProduct] = None
     object: Union[dict, GeneOrGeneProduct] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     object_direction_qualifier: Optional[Union[str, "DirectionQualifierEnum"]] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -12310,7 +12564,7 @@ class ChemicalEntityOrGeneOrGeneProductRegulatesGeneAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12326,6 +12580,8 @@ class AnatomicalEntityToAnatomicalEntityAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, AnatomicalEntityId] = None
     object: Union[str, AnatomicalEntityId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.subject):
@@ -12341,7 +12597,7 @@ class AnatomicalEntityToAnatomicalEntityAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12362,6 +12618,8 @@ class AnatomicalEntityToAnatomicalEntityPartOfAssociation(AnatomicalEntityToAnat
     subject: Union[str, AnatomicalEntityId] = None
     object: Union[str, AnatomicalEntityId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -12387,7 +12645,7 @@ class AnatomicalEntityToAnatomicalEntityPartOfAssociation(AnatomicalEntityToAnat
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12408,6 +12666,8 @@ class AnatomicalEntityToAnatomicalEntityOntogenicAssociation(AnatomicalEntityToA
     subject: Union[str, AnatomicalEntityId] = None
     object: Union[str, AnatomicalEntityId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -12433,7 +12693,7 @@ class AnatomicalEntityToAnatomicalEntityOntogenicAssociation(AnatomicalEntityToA
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12487,6 +12747,8 @@ class OrganismTaxonToOrganismTaxonAssociation(Association):
     predicate: Union[str, PredicateType] = None
     subject: Union[str, OrganismTaxonId] = None
     object: Union[str, OrganismTaxonId] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.predicate):
@@ -12507,7 +12769,7 @@ class OrganismTaxonToOrganismTaxonAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12526,6 +12788,8 @@ class OrganismTaxonToOrganismTaxonSpecialization(OrganismTaxonToOrganismTaxonAss
     subject: Union[str, OrganismTaxonId] = None
     object: Union[str, OrganismTaxonId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.id):
@@ -12551,7 +12815,7 @@ class OrganismTaxonToOrganismTaxonSpecialization(OrganismTaxonToOrganismTaxonAss
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12572,6 +12836,8 @@ class OrganismTaxonToOrganismTaxonInteraction(OrganismTaxonToOrganismTaxonAssoci
     subject: Union[str, OrganismTaxonId] = None
     object: Union[str, OrganismTaxonId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
     associated_environmental_context: Optional[str] = None
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
@@ -12601,7 +12867,7 @@ class OrganismTaxonToOrganismTaxonInteraction(OrganismTaxonToOrganismTaxonAssoci
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 @dataclass
@@ -12617,6 +12883,8 @@ class OrganismTaxonToEnvironmentAssociation(Association):
     subject: Union[str, OrganismTaxonId] = None
     object: Union[str, NamedThingId] = None
     predicate: Union[str, PredicateType] = None
+    knowledge_level: Union[str, "KnowledgeLevelEnum"] = "not_provided"
+    agent_type: Union[str, "AgentTypeEnum"] = "not_provided"
 
     def __post_init__(self, *_: List[str], **kwargs: Dict[str, Any]):
         if self._is_empty(self.subject):
@@ -12637,10 +12905,60 @@ class OrganismTaxonToEnvironmentAssociation(Association):
         super().__post_init__(**kwargs)
         if not isinstance(self.category, list):
             self.category = [self.category] if self.category is not None else []
-        self.category = [v if isinstance(v, CategoryType) else CategoryType(v) for v in self.category]
+        self.category = [v if isinstance(v, URIorCURIE) else URIorCURIE(v) for v in self.category]
 
 
 # Enumerations
+class ApprovalStatusEnum(EnumDefinitionImpl):
+
+    discovery_and_development_phase = PermissibleValue(
+        text="discovery_and_development_phase",
+        description="""Discovery & Development Phase. Discovery involves researchers finding new possibilities for medication through testing molecular compounds, noting unexpected effects from existing treatments, or the creation of new technology that allows novel ways of targeting medical products to sites in the body. Drug development occurs after researchers identify potential compounds for experiments.""")
+    preclinical_research_phase = PermissibleValue(
+        text="preclinical_research_phase",
+        description="""Preclinical Research Phase.  Once researchers have examined the possibilities a new drug may contain, they must do preliminary research to determine its potential for harm (toxicity). This is categorized as preclinical research and can be one of two types: in vitro or in vivo.""")
+    fda_clinical_research_phase = PermissibleValue(
+        text="fda_clinical_research_phase",
+        description="""Clinical Research Phase. Clinical research involves trials of the drug on people, and it is one of the most involved stages in the drug development and approval process. Clinical trials must answer specific questions and follow a protocol determined by the drug researcher or manufacturer.""")
+    fda_review_phase_4 = PermissibleValue(
+        text="fda_review_phase_4",
+        description="FDA Review")
+    fda_post_market_safety_review = PermissibleValue(
+        text="fda_post_market_safety_review",
+        description="""FDA Post-Market Safety Monitoring.  The last phase of drug approval is an ongoing one while the drug is on the marketplace. If a developer wants to change anything about the drug formulation or approve it for a new use, they must apply with the FDA. The FDA also frequently reviews the drug’s advertising and its manufacturing facility to make sure everything involved in its creation and marketing is in compliance with regulations.""")
+    fda_clinical_research_phase_1 = PermissibleValue(
+        text="fda_clinical_research_phase_1",
+        description="""In the FDA Clinical Research Phase, the Clinical Research Phase 1 involves 20 – 100 study participants and lasts several months. This phase is used to determine the safety and dosage of the drug, and about 70% of these drugs move on to the next clinical research phase.""")
+    fda_clinical_research_phase_2 = PermissibleValue(
+        text="fda_clinical_research_phase_2",
+        description="""In the FDA Clinical Research Phase, the Clinical Research Phase 2 involves up to several hundred people, who must have the disease or condition the drug supposes to treat. This phase can last from a few months to two years, and its purpose is to monitor the efficacy of the drug, as well as note side effects that may occur.""")
+    fda_clinical_research_phase_3 = PermissibleValue(
+        text="fda_clinical_research_phase_3",
+        description="""In the FDA Clinical Research Phase, the Clinical Research Phase 3 involves 300 – 3000 volunteers and can last up to four years. It is used to continue monitoring the efficacy of the drug, as well as exploring any longer-term adverse reactions.""")
+    fda_clinical_research_phase_4 = PermissibleValue(
+        text="fda_clinical_research_phase_4",
+        description="""In the FDA Clinical Research Phase, the Clinical Research Phase 4 involves several thousands of volunteers who have the disease or condition and continues to monitor safety and efficacy. If a drug passes this phase, it goes on to FDA review.""")
+    fda_fast_track = PermissibleValue(
+        text="fda_fast_track",
+        description="""Fast track is a process designed to facilitate the development, and expedite the review of drugs to treat serious conditions and fill an unmet medical need. The purpose is to get important new drugs to the patient earlier. Fast Track addresses a broad range of serious conditions. For more information https://www.fda.gov/patients/fast-track-breakthrough-therapy-accelerated-approval-priority-review/fast-track""")
+    fda_breakthrough_therapy = PermissibleValue(
+        text="fda_breakthrough_therapy",
+        description="""Breakthrough Therapy designation is a process designed to expedite the development and review of drugs that are intended to treat a serious condition and preliminary clinical evidence indicates that the drug may demonstrate substantial improvement over available therapy on a clinically significant endpoint(s). For more information https://www.fda.gov/patients/fast-track-breakthrough-therapy-accelerated-approval-priority-review/breakthrough-therapy""")
+    fda_accelerated_approval = PermissibleValue(
+        text="fda_accelerated_approval",
+        description="""When studying a new drug, it can sometimes take many years to learn whether a drug actually provides a real effect on how a patient survives, feels, or functions. A positive therapeutic effect that is clinically meaningful in the context of a given disease is known as “clinical benefit”. Mindful of the fact that it may take an extended period of time to measure a drug’s intended clinical benefit, in 1992 FDA instituted the Accelerated Approval regulations. These regulations allowed drugs for serious conditions that filled an unmet medical need to be approved based on a surrogate endpoint. Using a surrogate endpoint enabled the FDA to approve these drugs faster. For more information https://www.fda.gov/patients/fast-track-breakthrough-therapy-accelerated-approval-priority-review/accelerated-approval""")
+    fda_priority_review = PermissibleValue(
+        text="fda_priority_review",
+        description="""Prior to approval, each drug marketed in the United States must go through a detailed FDA review process. In 1992, under the Prescription Drug User Act (PDUFA), FDA agreed to specific goals for improving the drug review time and created a two-tiered system of review times – Standard Review and Priority Review. A Priority Review designation means FDA’s goal is to take action on an application within 6 months (compared to 10 months under standard review). For more information https://www.fda.gov/patients/fast-track-breakthrough-therapy-accelerated-approval-priority-review/priority-review""")
+    regular_fda_approval = PermissibleValue(
+        text="regular_fda_approval",
+        description="""Regular FDA Approval.  The last phase of drug approval is an ongoing one while the drug is on the marketplace. If a developer wants to change anything about the drug formulation or approve it for a new use, they must apply with the FDA. The FDA also frequently reviews the drug’s advertising and its manufacturing facility to make sure everything involved in its creation and marketing is in compliance with regulations.""")
+    post_approval_withdrawal = PermissibleValue(text="post_approval_withdrawal")
+
+    _defn = EnumDefinition(
+        name="ApprovalStatusEnum",
+    )
+
 class ClinicalApprovalStatusEnum(EnumDefinitionImpl):
 
     approved_for_condition = PermissibleValue(text="approved_for_condition")
@@ -12750,6 +13068,10 @@ class GeneOrGeneProductOrChemicalEntityAspectEnum(EnumDefinitionImpl):
     folding = PermissibleValue(text="folding")
     localization = PermissibleValue(text="localization")
     transport = PermissibleValue(text="transport")
+    absorption = PermissibleValue(text="absorption")
+    aggregation = PermissibleValue(text="aggregation")
+    interaction = PermissibleValue(text="interaction")
+    release = PermissibleValue(text="release")
     secretion = PermissibleValue(text="secretion")
     uptake = PermissibleValue(text="uptake")
     splicing = PermissibleValue(text="splicing")
@@ -13029,6 +13351,62 @@ class FDAIDAAdverseEventEnum(EnumDefinitionImpl):
         description="""please consult with the FDA guidelines as proposed in this document: https://www.accessdata.fda.gov/scripts/cdrh/cfdocs/cfcfr/cfrsearch.cfm?fr=312.32""",
     )
 
+class AgentTypeEnum(EnumDefinitionImpl):
+
+    manual_agent = PermissibleValue(
+        text="manual_agent",
+        description="""A human agent who is responsible for generating a statement of knowledge. The human may utilize computationally generated information as evidence for the resulting knowledge,  but the human is the one who ultimately interprets/reasons with  this evidence to produce a statement of knowledge.""")
+    automated_agent = PermissibleValue(
+        text="automated_agent",
+        description="""An automated agent, typically a software program or tool, that is  responsible for generating a statement of knowledge. Human contribution  to the knowledge creation process ends with the definition and coding of algorithms or analysis pipelines that get executed by the automated agent.""")
+    data_analysis_pipeline = PermissibleValue(
+        text="data_analysis_pipeline",
+        description="""An automated agent that executes an analysis workflow over data and  reports the direct results of the analysis. These typically report  statistical associations/correlations between variables in the input dataset, and do not interpret/infer broader conclusions from associations the analysis reveals in the data.""")
+    computational_model = PermissibleValue(
+        text="computational_model",
+        description="""An automated agent that generates knowledge statements (typically predictions) based on rules/logic explicitly encoded in an algorithm (e.g. heuristic models, supervised classifiers), or learned from patterns  observed in data (e.g. ML models, unsupervised classifiers).""")
+    text_mining_agent = PermissibleValue(
+        text="text_mining_agent",
+        description="""An automated agent that uses Natural Language Processing to recognize concepts and/or relationships in text, and report them using formally encoded semantics (e.g. as an edge in a knowledge graph).""")
+    image_processing_agent = PermissibleValue(
+        text="image_processing_agent",
+        description="""An automated agent that processes images to generate textual statements of  knowledge derived from the image and/or expressed in text the image  depicts (e.g. via OCR).""")
+    manual_validation_of_automated_agent = PermissibleValue(
+        text="manual_validation_of_automated_agent",
+        description="""A human agent reviews and validates/approves the veracity of knowledge  that is initially generated by an automated agent.""")
+    not_provided = PermissibleValue(
+        text="not_provided",
+        description="""The agent type is not provided, typically because it cannot be determined from available information if the agent that generated the knowledge is  manual or automated.""")
+
+    _defn = EnumDefinition(
+        name="AgentTypeEnum",
+    )
+
+class KnowledgeLevelEnum(EnumDefinitionImpl):
+
+    knowledge_assertion = PermissibleValue(
+        text="knowledge_assertion",
+        description="""A statement of purported fact that is put forth by an agent as true, based on assessment of direct evidence. Assertions are likely but not  definitively true.""")
+    logical_entailment = PermissibleValue(
+        text="logical_entailment",
+        description="""A statement reporting a conclusion that follows logically from premises representing established facts or knowledge assertions (e.g. fingernail part of finger, finger part of hand --> fingernail part of hand).""")
+    prediction = PermissibleValue(
+        text="prediction",
+        description="""A statement of a possible fact based on probabilistic forms of reasoning over more indirect forms of evidence, that lead to more speculative conclusions.""")
+    statistical_association = PermissibleValue(
+        text="statistical_association",
+        description="""A statement that reports concepts representing variables in a dataset to be statistically associated with each other in a particular cohort (e.g. 'Metformin Treatment (variable 1) is correlated with Diabetes Diagnosis (variable 2) in EHR dataset X').""")
+    observation = PermissibleValue(
+        text="observation",
+        description="""A statement reporting (and possibly quantifying) a phenomenon that was observed to occur -  absent any analysis or interpretation that generates a statistical association or supports a broader conclusion or inference.""")
+    not_provided = PermissibleValue(
+        text="not_provided",
+        description="""The knowledge level is not provided, typically because it cannot be determined from available. information.""")
+
+    _defn = EnumDefinition(
+        name="KnowledgeLevelEnum",
+    )
+
 # Slots
 class slots:
     pass
@@ -13067,7 +13445,7 @@ slots.type = Slot(uri=RDF.type, name="type", curie=RDF.curie('type'),
                    model_uri=BIOLINK.type, domain=Entity, range=Optional[Union[str, List[str]]])
 
 slots.category = Slot(uri=BIOLINK.category, name="category", curie=BIOLINK.curie('category'),
-                   model_uri=BIOLINK.category, domain=Entity, range=Optional[Union[Union[str, CategoryType], List[Union[str, CategoryType]]]])
+                   model_uri=BIOLINK.category, domain=Entity, range=Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]])
 
 slots.publication_type = Slot(uri=DCT.type, name="publication type", curie=DCT.curie('type'),
                    model_uri=BIOLINK.publication_type, domain=None, range=Optional[Union[str, List[str]]])
@@ -13113,6 +13491,9 @@ slots.has_topic = Slot(uri=BIOLINK.has_topic, name="has topic", curie=BIOLINK.cu
 
 slots.xref = Slot(uri=BIOLINK.xref, name="xref", curie=BIOLINK.curie('xref'),
                    model_uri=BIOLINK.xref, domain=NamedThing, range=Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]])
+
+slots.url = Slot(uri=BIOLINK.url, name="url", curie=BIOLINK.curie('url'),
+                   model_uri=BIOLINK.url, domain=Entity, range=Optional[str])
 
 slots.semmed_agreement_count = Slot(uri=BIOLINK.semmed_agreement_count, name="semmed agreement count", curie=BIOLINK.curie('semmed_agreement_count'),
                    model_uri=BIOLINK.semmed_agreement_count, domain=Association, range=Optional[int])
@@ -13304,10 +13685,10 @@ slots.temporal_interval_qualifier = Slot(uri=BIOLINK.temporal_interval_qualifier
                    model_uri=BIOLINK.temporal_interval_qualifier, domain=Association, range=Optional[Union[str, TimeType]])
 
 slots.is_supplement = Slot(uri=BIOLINK.is_supplement, name="is supplement", curie=BIOLINK.curie('is_supplement'),
-                   model_uri=BIOLINK.is_supplement, domain=NamedThing, range=Optional[Union[str, ChemicalMixtureId]])
+                   model_uri=BIOLINK.is_supplement, domain=ChemicalMixture, range=Optional[str])
 
 slots.trade_name = Slot(uri=BIOLINK.trade_name, name="trade name", curie=BIOLINK.curie('trade_name'),
-                   model_uri=BIOLINK.trade_name, domain=NamedThing, range=Optional[Union[str, ChemicalEntityId]])
+                   model_uri=BIOLINK.trade_name, domain=ChemicalEntity, range=Optional[str])
 
 slots.available_from = Slot(uri=BIOLINK.available_from, name="available from", curie=BIOLINK.curie('available_from'),
                    model_uri=BIOLINK.available_from, domain=NamedThing, range=Optional[Union[Union[str, "DrugAvailabilityEnum"], List[Union[str, "DrugAvailabilityEnum"]]]])
@@ -13328,10 +13709,10 @@ slots.FDA_adverse_event_level = Slot(uri=BIOLINK.FDA_adverse_event_level, name="
                    model_uri=BIOLINK.FDA_adverse_event_level, domain=Association, range=Optional[Union[str, "FDAIDAAdverseEventEnum"]])
 
 slots.highest_FDA_approval_status = Slot(uri=BIOLINK.highest_FDA_approval_status, name="highest FDA approval status", curie=BIOLINK.curie('highest_FDA_approval_status'),
-                   model_uri=BIOLINK.highest_FDA_approval_status, domain=None, range=Optional[str])
+                   model_uri=BIOLINK.highest_FDA_approval_status, domain=None, range=Optional[Union[str, "ApprovalStatusEnum"]])
 
 slots.drug_regulatory_status_world_wide = Slot(uri=BIOLINK.drug_regulatory_status_world_wide, name="drug regulatory status world wide", curie=BIOLINK.curie('drug_regulatory_status_world_wide'),
-                   model_uri=BIOLINK.drug_regulatory_status_world_wide, domain=None, range=Optional[str])
+                   model_uri=BIOLINK.drug_regulatory_status_world_wide, domain=None, range=Optional[Union[str, "ApprovalStatusEnum"]])
 
 slots.routes_of_delivery = Slot(uri=BIOLINK.routes_of_delivery, name="routes of delivery", curie=BIOLINK.curie('routes_of_delivery'),
                    model_uri=BIOLINK.routes_of_delivery, domain=None, range=Optional[Union[Union[str, "DrugDeliveryEnum"], List[Union[str, "DrugDeliveryEnum"]]]])
@@ -13786,6 +14167,9 @@ slots.condition_prevented_by = Slot(uri=BIOLINK.condition_prevented_by, name="co
 slots.promotes_condition = Slot(uri=BIOLINK.promotes_condition, name="promotes condition", curie=BIOLINK.curie('promotes_condition'),
                    model_uri=BIOLINK.promotes_condition, domain=None, range=Optional[Union[Union[str, DiseaseOrPhenotypicFeatureId], List[Union[str, DiseaseOrPhenotypicFeatureId]]]])
 
+slots.condition_promoted_by = Slot(uri=BIOLINK.condition_promoted_by, name="condition promoted by", curie=BIOLINK.curie('condition_promoted_by'),
+                   model_uri=BIOLINK.condition_promoted_by, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
+
 slots.predisposes_to_condition = Slot(uri=BIOLINK.predisposes_to_condition, name="predisposes to condition", curie=BIOLINK.curie('predisposes_to_condition'),
                    model_uri=BIOLINK.predisposes_to_condition, domain=None, range=Optional[Union[Union[str, DiseaseOrPhenotypicFeatureId], List[Union[str, DiseaseOrPhenotypicFeatureId]]]])
 
@@ -13799,19 +14183,25 @@ slots.condition_exacerbated_by = Slot(uri=BIOLINK.condition_exacerbated_by, name
                    model_uri=BIOLINK.condition_exacerbated_by, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
 
 slots.treats = Slot(uri=BIOLINK.treats, name="treats", curie=BIOLINK.curie('treats'),
-                   model_uri=BIOLINK.treats, domain=None, range=Optional[Union[str, DiseaseOrPhenotypicFeatureId]])
+                   model_uri=BIOLINK.treats, domain=None, range=Optional[Union[Union[str, DiseaseOrPhenotypicFeatureId], List[Union[str, DiseaseOrPhenotypicFeatureId]]]])
 
 slots.treated_by = Slot(uri=BIOLINK.treated_by, name="treated by", curie=BIOLINK.curie('treated_by'),
-                   model_uri=BIOLINK.treated_by, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[dict, ChemicalOrDrugOrTreatment]])
+                   model_uri=BIOLINK.treated_by, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
 
 slots.studied_to_treat = Slot(uri=BIOLINK.studied_to_treat, name="studied to treat", curie=BIOLINK.curie('studied_to_treat'),
                    model_uri=BIOLINK.studied_to_treat, domain=None, range=Optional[Union[Union[str, DiseaseOrPhenotypicFeatureId], List[Union[str, DiseaseOrPhenotypicFeatureId]]]])
 
-slots.studied_for_treatment_with = Slot(uri=BIOLINK.studied_for_treatment_with, name="studied for treatment with", curie=BIOLINK.curie('studied_for_treatment_with'),
-                   model_uri=BIOLINK.studied_for_treatment_with, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[dict, ChemicalOrDrugOrTreatment]])
-
 slots.in_clinical_trials_for = Slot(uri=BIOLINK.in_clinical_trials_for, name="in clinical trials for", curie=BIOLINK.curie('in_clinical_trials_for'),
                    model_uri=BIOLINK.in_clinical_trials_for, domain=None, range=Optional[Union[Union[str, DiseaseOrPhenotypicFeatureId], List[Union[str, DiseaseOrPhenotypicFeatureId]]]])
+
+slots.tested_by_clinical_trials_of = Slot(uri=BIOLINK.tested_by_clinical_trials_of, name="tested by clinical trials of", curie=BIOLINK.curie('tested_by_clinical_trials_of'),
+                   model_uri=BIOLINK.tested_by_clinical_trials_of, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
+
+slots.treated_in_studies_by = Slot(uri=BIOLINK.treated_in_studies_by, name="treated in studies by", curie=BIOLINK.curie('treated_in_studies_by'),
+                   model_uri=BIOLINK.treated_in_studies_by, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
+
+slots.tested_by_preclinical_trials_of = Slot(uri=BIOLINK.tested_by_preclinical_trials_of, name="tested by preclinical trials of", curie=BIOLINK.curie('tested_by_preclinical_trials_of'),
+                   model_uri=BIOLINK.tested_by_preclinical_trials_of, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
 
 slots.in_preclinical_trials_for = Slot(uri=BIOLINK.in_preclinical_trials_for, name="in preclinical trials for", curie=BIOLINK.curie('in_preclinical_trials_for'),
                    model_uri=BIOLINK.in_preclinical_trials_for, domain=None, range=Optional[Union[Union[str, DiseaseOrPhenotypicFeatureId], List[Union[str, DiseaseOrPhenotypicFeatureId]]]])
@@ -13819,11 +14209,20 @@ slots.in_preclinical_trials_for = Slot(uri=BIOLINK.in_preclinical_trials_for, na
 slots.beneficial_in_models_for = Slot(uri=BIOLINK.beneficial_in_models_for, name="beneficial in models for", curie=BIOLINK.curie('beneficial_in_models_for'),
                    model_uri=BIOLINK.beneficial_in_models_for, domain=None, range=Optional[Union[Union[str, DiseaseOrPhenotypicFeatureId], List[Union[str, DiseaseOrPhenotypicFeatureId]]]])
 
+slots.models_demonstrating_benefits_for = Slot(uri=BIOLINK.models_demonstrating_benefits_for, name="models demonstrating benefits for", curie=BIOLINK.curie('models_demonstrating_benefits_for'),
+                   model_uri=BIOLINK.models_demonstrating_benefits_for, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
+
 slots.applied_to_treat = Slot(uri=BIOLINK.applied_to_treat, name="applied to treat", curie=BIOLINK.curie('applied_to_treat'),
                    model_uri=BIOLINK.applied_to_treat, domain=None, range=Optional[Union[Union[str, DiseaseOrPhenotypicFeatureId], List[Union[str, DiseaseOrPhenotypicFeatureId]]]])
 
+slots.treatment_applications_from = Slot(uri=BIOLINK.treatment_applications_from, name="treatment applications from", curie=BIOLINK.curie('treatment_applications_from'),
+                   model_uri=BIOLINK.treatment_applications_from, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
+
 slots.treats_or_applied_or_studied_to_treat = Slot(uri=BIOLINK.treats_or_applied_or_studied_to_treat, name="treats or applied or studied to treat", curie=BIOLINK.curie('treats_or_applied_or_studied_to_treat'),
-                   model_uri=BIOLINK.treats_or_applied_or_studied_to_treat, domain=None, range=Optional[str])
+                   model_uri=BIOLINK.treats_or_applied_or_studied_to_treat, domain=None, range=Optional[Union[Union[str, DiseaseOrPhenotypicFeatureId], List[Union[str, DiseaseOrPhenotypicFeatureId]]]])
+
+slots.subject_of_treatment_application_or_study_for_treatment_by = Slot(uri=BIOLINK.subject_of_treatment_application_or_study_for_treatment_by, name="subject of treatment application or study for treatment by", curie=BIOLINK.curie('subject_of_treatment_application_or_study_for_treatment_by'),
+                   model_uri=BIOLINK.subject_of_treatment_application_or_study_for_treatment_by, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
 
 slots.correlated_with = Slot(uri=BIOLINK.correlated_with, name="correlated with", curie=BIOLINK.curie('correlated_with'),
                    model_uri=BIOLINK.correlated_with, domain=NamedThing, range=Optional[Union[Union[str, NamedThingId], List[Union[str, NamedThingId]]]])
@@ -14108,13 +14507,13 @@ slots.is_side_effect_of = Slot(uri=BIOLINK.is_side_effect_of, name="is side effe
                    model_uri=BIOLINK.is_side_effect_of, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
 
 slots.contraindicated_in = Slot(uri=BIOLINK.contraindicated_in, name="contraindicated in", curie=BIOLINK.curie('contraindicated_in'),
-                   model_uri=BIOLINK.contraindicated_in, domain=None, range=Optional[Union[Union[str, DiseaseOrPhenotypicFeatureId], List[Union[str, DiseaseOrPhenotypicFeatureId]]]])
+                   model_uri=BIOLINK.contraindicated_in, domain=None, range=Optional[Union[Union[str, BiologicalEntityId], List[Union[str, BiologicalEntityId]]]])
 
 slots.chemical_entity_or_drug_or_treatment = Slot(uri=BIOLINK.chemical_entity_or_drug_or_treatment, name="chemical entity or drug or treatment", curie=BIOLINK.curie('chemical_entity_or_drug_or_treatment'),
                    model_uri=BIOLINK.chemical_entity_or_drug_or_treatment, domain=None, range=Optional[str])
 
 slots.has_contraindication = Slot(uri=BIOLINK.has_contraindication, name="has contraindication", curie=BIOLINK.curie('has_contraindication'),
-                   model_uri=BIOLINK.has_contraindication, domain=DiseaseOrPhenotypicFeature, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
+                   model_uri=BIOLINK.has_contraindication, domain=BiologicalEntity, range=Optional[Union[Union[dict, ChemicalOrDrugOrTreatment], List[Union[dict, ChemicalOrDrugOrTreatment]]]])
 
 slots.has_not_completed = Slot(uri=BIOLINK.has_not_completed, name="has not completed", curie=BIOLINK.curie('has_not_completed'),
                    model_uri=BIOLINK.has_not_completed, domain=NamedThing, range=Optional[Union[Union[str, NamedThingId], List[Union[str, NamedThingId]]]])
@@ -14158,7 +14557,7 @@ slots.develops_into = Slot(uri=BIOLINK.develops_into, name="develops into", curi
 slots.in_taxon = Slot(uri=BIOLINK.in_taxon, name="in taxon", curie=BIOLINK.curie('in_taxon'),
                    model_uri=BIOLINK.in_taxon, domain=None, range=Optional[Union[Union[str, OrganismTaxonId], List[Union[str, OrganismTaxonId]]]])
 
-slots.in_taxon_label = Slot(uri=RDFS.label, name="in taxon label", curie=RDFS.curie('label'),
+slots.in_taxon_label = Slot(uri=BIOLINK.in_taxon_label, name="in taxon label", curie=BIOLINK.curie('in_taxon_label'),
                    model_uri=BIOLINK.in_taxon_label, domain=None, range=Optional[Union[str, LabelType]])
 
 slots.taxon_of = Slot(uri=BIOLINK.taxon_of, name="taxon of", curie=BIOLINK.curie('taxon_of'),
@@ -14413,12 +14812,17 @@ slots.supporting_study_date_range = Slot(uri=BIOLINK.supporting_study_date_range
 slots.supporting_study_context = Slot(uri=BIOLINK.supporting_study_context, name="supporting study context", curie=BIOLINK.curie('supporting_study_context'),
                    model_uri=BIOLINK.supporting_study_context, domain=Association, range=Optional[str])
 
+slots.knowledge_level = Slot(uri=BIOLINK.knowledge_level, name="knowledge level", curie=BIOLINK.curie('knowledge_level'),
+                   model_uri=BIOLINK.knowledge_level, domain=Association, range=Union[str, "KnowledgeLevelEnum"])
+
+slots.agent_type = Slot(uri=BIOLINK.agent_type, name="agent type", curie=BIOLINK.curie('agent_type'),
+                   model_uri=BIOLINK.agent_type, domain=Association, range=Union[str, "AgentTypeEnum"])
+
 slots.attribute_name = Slot(uri=RDFS.label, name="attribute_name", curie=RDFS.curie('label'),
                    model_uri=BIOLINK.attribute_name, domain=Attribute, range=Optional[Union[str, LabelType]])
 
 slots.named_thing_category = Slot(uri=BIOLINK.category, name="named thing_category", curie=BIOLINK.curie('category'),
-                   model_uri=BIOLINK.named_thing_category, domain=NamedThing, range=Union[Union[str, CategoryType], List[Union[str, CategoryType]]],
-                   pattern=re.compile(r'^biolink:[A-Z][A-Za-z]+$'))
+                   model_uri=BIOLINK.named_thing_category, domain=NamedThing, range=Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]])
 
 slots.organism_taxon_has_taxonomic_rank = Slot(uri=BIOLINK.has_taxonomic_rank, name="organism taxon_has taxonomic rank", curie=BIOLINK.curie('has_taxonomic_rank'),
                    model_uri=BIOLINK.organism_taxon_has_taxonomic_rank, domain=OrganismTaxon, range=Optional[Union[str, TaxonomicRankId]], mappings = [WIKIDATA["P105"]])
@@ -14471,9 +14875,6 @@ slots.retrieval_source_resource_role = Slot(uri=BIOLINK.resource_role, name="ret
 slots.retrieval_source_upstream_resource_ids = Slot(uri=BIOLINK.upstream_resource_ids, name="retrieval source_upstream resource ids", curie=BIOLINK.curie('upstream_resource_ids'),
                    model_uri=BIOLINK.retrieval_source_upstream_resource_ids, domain=RetrievalSource, range=Optional[Union[str, URIorCURIE]])
 
-slots.small_molecule_id = Slot(uri=BIOLINK.id, name="small molecule_id", curie=BIOLINK.curie('id'),
-                   model_uri=BIOLINK.small_molecule_id, domain=SmallMolecule, range=Union[str, SmallMoleculeId])
-
 slots.molecular_activity_has_input = Slot(uri=BIOLINK.has_input, name="molecular activity_has input", curie=BIOLINK.curie('has_input'),
                    model_uri=BIOLINK.molecular_activity_has_input, domain=MolecularActivity, range=Optional[Union[Union[str, MolecularEntityId], List[Union[str, MolecularEntityId]]]])
 
@@ -14511,7 +14912,7 @@ slots.association_type = Slot(uri=RDF.type, name="association_type", curie=RDF.c
                    model_uri=BIOLINK.association_type, domain=Association, range=Optional[Union[str, List[str]]])
 
 slots.association_category = Slot(uri=BIOLINK.category, name="association_category", curie=BIOLINK.curie('category'),
-                   model_uri=BIOLINK.association_category, domain=Association, range=Optional[Union[Union[str, CategoryType], List[Union[str, CategoryType]]]])
+                   model_uri=BIOLINK.association_category, domain=Association, range=Optional[Union[Union[str, URIorCURIE], List[Union[str, URIorCURIE]]]])
 
 slots.chemical_entity_assesses_named_thing_association_subject = Slot(uri=RDF.subject, name="chemical entity assesses named thing association_subject", curie=RDF.curie('subject'),
                    model_uri=BIOLINK.chemical_entity_assesses_named_thing_association_subject, domain=ChemicalEntityAssessesNamedThingAssociation, range=Union[str, ChemicalEntityId])

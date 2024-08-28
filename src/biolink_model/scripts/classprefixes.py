@@ -1,5 +1,5 @@
 # Auto generated from class_prefixes.yaml by pythongen.py version: 0.0.1
-# Generation date: 2024-02-15T19:58:58
+# Generation date: 2024-08-06T22:05:39
 # Schema: BiolinkClassPrefixes
 #
 # id: biolink-model-class-prefixes
@@ -11,6 +11,7 @@ import re
 from jsonasobj2 import JsonObj, as_dict
 from typing import Optional, List, Union, Dict, ClassVar, Any
 from dataclasses import dataclass
+from datetime import date, datetime
 from linkml_runtime.linkml_model.meta import EnumDefinition, PermissibleValue, PvFormulaOptions
 
 from linkml_runtime.utils.slot import Slot
@@ -25,7 +26,7 @@ from linkml_runtime.linkml_model.types import Integer, String, Uri, Uriorcurie
 from linkml_runtime.utils.metamodelcore import URI, URIorCURIE
 
 metamodel_version = "1.7.0"
-version = "4.1.0"
+version = "4.2.2"
 
 # Overwrite dataclasses _init_fn to add **kwargs in __init__
 dataclasses._init_fn = dataclasses_init_fn_with_kwargs
